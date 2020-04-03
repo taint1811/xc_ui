@@ -1,0 +1,28 @@
+.xc-icon {
+  display: inline-block;
+  color: inherit;
+  text-align: center;
+  fill: currentColor;
+  &:not(.xc-icon-c-s):not(.xc-icon-custom-size) {
+    @include icon-size($icon-size-base);
+
+    // TODO: create variable with a range
+    @for $i from 2 through 9 {
+      &.xc-icon-#{$i}xl {
+        @include icon-size($i * ($icon-size-xl / 1.5));
+      }
+    }
+
+    &.xc-icon-xl {
+      @include icon-size($icon-size-xl);
+    }
+
+    &.xc-icon-lg {
+      @include icon-size($icon-size-lg);
+    }
+
+    &.xc-icon-sm {
+      @include icon-size($icon-size-sm);
+    }
+  }
+}

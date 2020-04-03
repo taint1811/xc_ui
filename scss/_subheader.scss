@@ -1,0 +1,106 @@
+.xc-subheader {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  min-height: $subheader-height;
+
+  &[class*="bg-"]  {
+    border-color: rgba($black, .1);
+  }
+
+  &.xc-subheader-fixed {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: $zindex-fixed;
+  }
+}
+
+.xc-subheader-nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-height: $subheader-height;
+  padding: 0;
+  margin-bottom: 0;
+  list-style: none;
+
+  .xc-subheader-nav-item {
+    position: relative;
+  }
+
+  .xc-subheader-nav-btn {
+    background-color: transparent;
+    border: $btn-border-width solid transparent;
+  }
+
+  .xc-subheader-nav-link,
+  .xc-subheader-nav-btn {
+    display: flex;
+    align-items: center;
+    padding-right: $header-nav-link-padding-x;
+    padding-left: $header-nav-link-padding-x;
+
+    .badge {
+      position: absolute;
+      top: 50%;
+      margin-top: -16px;
+      @include ltr {
+        left: 50%;
+        margin-left: 0;
+      }
+      @include rtl {
+        right: 50%;
+        margin-right: 0;
+      }
+    }
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+//
+// Subheader variants
+//
+
+@include themes($subheader-theme-map, $create: append, $parent: ".xc-subheader") {
+  background: themes-get-value("subheader-bg");
+  @include borders(themes-get-value("subheader-border"));
+
+  .xc-subheader-nav {
+    .xc-subheader-nav-link,
+    .xc-subheader-nav-btn {
+      color: themes-get-value("subheader-color");
+
+      @include hover-focus {
+        color: themes-get-value("subheader-hover-color");
+      }
+
+      &.xc-disabled {
+        color: themes-get-value("subheader-disabled-color");
+      }
+    }
+
+    .xc-show > .xc-subheader-nav-link,
+    .xc-active > .xc-subheader-nav-link,
+    .xc-subheader-nav-link.xc-show,
+    .xc-subheader-nav-link.xc-active {
+      color: themes-get-value("subheader-active-color");
+    }
+  }
+
+  .xc-subheader-text {
+    color: themes-get-value("subheader-color");
+    a {
+      color: themes-get-value("subheader-active-color");
+
+      @include hover-focus {
+        color: themes-get-value("subheader-active-color");
+      }
+    }
+  }
+}
