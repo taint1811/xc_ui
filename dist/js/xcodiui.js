@@ -5455,8 +5455,6 @@
 
       this._setActiveLink();
 
-      this._psScrollActive();
-
       this._ps = null;
       this._backdrop = null;
 

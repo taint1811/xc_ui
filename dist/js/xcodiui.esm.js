@@ -5450,8 +5450,6 @@ var Sidebar = /*#__PURE__*/function () {
 
     this._setActiveLink();
 
-    this._psScrollActive();
-
     this._ps = null;
     this._backdrop = null;
 

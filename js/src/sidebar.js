@@ -90,7 +90,6 @@ class Sidebar {
     this._minimize = this._isMinimized()
     this._unfoldable = this._isUnfoldable()
     this._setActiveLink()
-    this._psScrollActive()
     this._ps = null
     this._backdrop = null
     this._psInit()
