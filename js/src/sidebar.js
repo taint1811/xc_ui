@@ -90,6 +90,7 @@ class Sidebar {
     this._minimize = this._isMinimized()
     this._unfoldable = this._isUnfoldable()
     this._setActiveLink()
+    this._psScrollActive()
     this._ps = null
     this._backdrop = null
     this._psInit()
@@ -354,6 +355,11 @@ class Sidebar {
     }
   }
 
+  _psScrollActive() {
+    const activeLink = document.querySelector(ClassName.ACTIVE)
+    activeLink.scrollTop = 0;
+  }
+
 
   _psDestroy() {
     if (this._ps) {
@@ -404,14 +410,11 @@ class Sidebar {
 
       if (element.href === currentUrl) {
         element.classList.add(ClassName.ACTIVE)
-        element.classList.add('xc-cmm3')
         // eslint-disable-next-line unicorn/prefer-spread
         Array.from(this._getParents(element, Selector.NAV_DROPDOWN)).forEach(element => {
           element.classList.add(ClassName.SHOW)
         })
-        const rectActive = element.getBoundingClientRect()
-        this._ps.scrollTop = rectActive.top
-        
+
       }
     })
    

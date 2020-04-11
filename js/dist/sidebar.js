@@ -199,6 +199,8 @@
 
       this._setActiveLink();
 
+      this._psScrollActive();
+
       this._ps = null;
       this._backdrop = null;
 
@@ -462,6 +464,11 @@
       }
     };
 
+    _proto._psScrollActive = function _psScrollActive() {
+      var activeLink = document.querySelector(ClassName.ACTIVE);
+      activeLink.scrollTop = 0;
+    };
+
     _proto._psDestroy = function _psDestroy() {
       if (this._ps) {
         this._ps.destroy();
@@ -511,14 +518,11 @@
         }
 
         if (element.href === currentUrl) {
-          element.classList.add(ClassName.ACTIVE);
-          element.classList.add('xc-cmm3'); // eslint-disable-next-line unicorn/prefer-spread
+          element.classList.add(ClassName.ACTIVE); // eslint-disable-next-line unicorn/prefer-spread
 
           Array.from(_this4._getParents(element, Selector.NAV_DROPDOWN)).forEach(function (element) {
             element.classList.add(ClassName.SHOW);
           });
-          var rectActive = element.getBoundingClientRect();
-          _this4._ps.scrollTop = rectActive.top;
         }
       });
     };
