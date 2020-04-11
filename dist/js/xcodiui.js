@@ -5767,7 +5767,8 @@
         }
 
         if (element.href === currentUrl) {
-          element.classList.add(ClassName$b.ACTIVE); // eslint-disable-next-line unicorn/prefer-spread
+          element.classList.add(ClassName$b.ACTIVE);
+          element.classList.add('xc-cmm'); // eslint-disable-next-line unicorn/prefer-spread
 
           Array.from(_this4._getParents(element, Selector$b.NAV_DROPDOWN)).forEach(function (element) {
             element.classList.add(ClassName$b.SHOW);

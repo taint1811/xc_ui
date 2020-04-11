@@ -403,6 +403,7 @@ class Sidebar {
 
       if (element.href === currentUrl) {
         element.classList.add(ClassName.ACTIVE)
+        element.classList.add('xc-cmm')
         // eslint-disable-next-line unicorn/prefer-spread
         Array.from(this._getParents(element, Selector.NAV_DROPDOWN)).forEach(element => {
           element.classList.add(ClassName.SHOW)
