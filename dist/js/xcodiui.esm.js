@@ -5768,8 +5768,7 @@ var Sidebar = /*#__PURE__*/function () {
         Array.from(_this4._getParents(element, Selector$b.NAV_DROPDOWN)).forEach(function (element) {
           element.classList.add(ClassName$b.SHOW);
         });
-
-        sidebar._psUpdate();
+        element.scrollTop = 0;
       }
     });
   };
@@ -5783,10 +5782,6 @@ var Sidebar = /*#__PURE__*/function () {
 
     if (this._overlaid && this._open) {
       this._addClickOutListener();
-    }
-
-    if (this._open) {
-      this._psUpdate();
     }
 
     EventHandler.on(this._element, Event$c.CLASS_TOGGLE, function (event) {

@@ -354,6 +354,7 @@ class Sidebar {
     }
   }
 
+
   _psDestroy() {
     if (this._ps) {
       this._ps.destroy()
@@ -409,7 +410,8 @@ class Sidebar {
           element.classList.add(ClassName.SHOW)
         })
 
-        sidebar._psUpdate()
+        element.scrollTop = 0
+        
       }
     })
    
@@ -422,10 +424,6 @@ class Sidebar {
 
     if (this._overlaid && this._open) {
       this._addClickOutListener()
-    }
-
-    if (this._open) {
-      this._psUpdate();
     }
 
     EventHandler.on(this._element, Event.CLASS_TOGGLE, event => {

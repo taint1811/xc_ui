@@ -517,8 +517,7 @@
           Array.from(_this4._getParents(element, Selector.NAV_DROPDOWN)).forEach(function (element) {
             element.classList.add(ClassName.SHOW);
           });
-
-          sidebar._psUpdate();
+          element.scrollTop = 0;
         }
       });
     };
@@ -532,10 +531,6 @@
 
       if (this._overlaid && this._open) {
         this._addClickOutListener();
-      }
-
-      if (this._open) {
-        this._psUpdate();
       }
 
       EventHandler.on(this._element, Event.CLASS_TOGGLE, function (event) {
