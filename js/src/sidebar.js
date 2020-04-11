@@ -410,6 +410,7 @@ class Sidebar {
         })
       }
     })
+    sidebar._psUpdate()
   }
 
   _addEventListeners() {
