@@ -8672,7 +8672,8 @@
           Array.from(_this4._getParents(element, Selector$b.NAV_DROPDOWN)).forEach(function (element) {
             element.classList.add(ClassName$b.SHOW);
           });
-          element.scrollTop = 0;
+          var rectActive = element.getBoundingClientRect();
+          _this4._ps.scrollTop = rectActive.top;
         }
       });
     };

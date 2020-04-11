@@ -409,8 +409,8 @@ class Sidebar {
         Array.from(this._getParents(element, Selector.NAV_DROPDOWN)).forEach(element => {
           element.classList.add(ClassName.SHOW)
         })
-
-        element.scrollTop = 0
+        const rectActive = element.getBoundingClientRect()
+        this._ps.scrollTop = rectActive.top
         
       }
     })
