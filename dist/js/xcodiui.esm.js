@@ -5457,8 +5457,6 @@ var Sidebar = /*#__PURE__*/function () {
 
     this._addEventListeners();
 
-    this._psUpdate();
-
     Data.setData(element, DATA_KEY$b, this);
   } // Getters
 
@@ -5765,15 +5763,15 @@ var Sidebar = /*#__PURE__*/function () {
 
       if (element.href === currentUrl) {
         element.classList.add(ClassName$b.ACTIVE);
-        element.classList.add('xc-cmm2'); // eslint-disable-next-line unicorn/prefer-spread
+        element.classList.add('xc-cmm3'); // eslint-disable-next-line unicorn/prefer-spread
 
         Array.from(_this4._getParents(element, Selector$b.NAV_DROPDOWN)).forEach(function (element) {
           element.classList.add(ClassName$b.SHOW);
         });
+
+        sidebar._psUpdate();
       }
     });
-
-    sidebar._psUpdate();
   };
 
   _proto._addEventListeners = function _addEventListeners() {
@@ -5785,6 +5783,10 @@ var Sidebar = /*#__PURE__*/function () {
 
     if (this._overlaid && this._open) {
       this._addClickOutListener();
+    }
+
+    if (this._open) {
+      this._psUpdate();
     }
 
     EventHandler.on(this._element, Event$c.CLASS_TOGGLE, function (event) {

@@ -206,8 +206,6 @@
 
       this._addEventListeners();
 
-      this._psUpdate();
-
       Data.setData(element, DATA_KEY, this);
     } // Getters
 
@@ -514,15 +512,15 @@
 
         if (element.href === currentUrl) {
           element.classList.add(ClassName.ACTIVE);
-          element.classList.add('xc-cmm2'); // eslint-disable-next-line unicorn/prefer-spread
+          element.classList.add('xc-cmm3'); // eslint-disable-next-line unicorn/prefer-spread
 
           Array.from(_this4._getParents(element, Selector.NAV_DROPDOWN)).forEach(function (element) {
             element.classList.add(ClassName.SHOW);
           });
+
+          sidebar._psUpdate();
         }
       });
-
-      sidebar._psUpdate();
     };
 
     _proto._addEventListeners = function _addEventListeners() {
@@ -534,6 +532,10 @@
 
       if (this._overlaid && this._open) {
         this._addClickOutListener();
+      }
+
+      if (this._open) {
+        this._psUpdate();
       }
 
       EventHandler.on(this._element, Event.CLASS_TOGGLE, function (event) {
