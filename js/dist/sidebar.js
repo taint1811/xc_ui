@@ -85,14 +85,62 @@
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
    * --------------------------------------------------------------------------
    */
+  var MILLISECONDS_MULTIPLIER = 1000;
   var TRANSITION_END = 'transitionend'; // Shoutout AngusCroll (https://goo.gl/pxwQGp)
 
   var toType = function toType(obj) {
     return {}.toString.call(obj).match(/\s([a-z]+)/i)[1].toLowerCase();
   };
 
+  var getTransitionDurationFromElement = function getTransitionDurationFromElement(element) {
+    if (!element) {
+      return 0;
+    } // Get transition-duration of the element
+
+
+    var _window$getComputedSt = window.getComputedStyle(element),
+        transitionDuration = _window$getComputedSt.transitionDuration,
+        transitionDelay = _window$getComputedSt.transitionDelay;
+
+    var floatTransitionDuration = parseFloat(transitionDuration);
+    var floatTransitionDelay = parseFloat(transitionDelay); // Return 0 if element or transition duration is not found
+
+    if (!floatTransitionDuration && !floatTransitionDelay) {
+      return 0;
+    } // If multiple durations are defined, take the first
+
+
+    transitionDuration = transitionDuration.split(',')[0];
+    transitionDelay = transitionDelay.split(',')[0];
+    return (parseFloat(transitionDuration) + parseFloat(transitionDelay)) * MILLISECONDS_MULTIPLIER;
+  };
+
+  var triggerTransitionEnd = function triggerTransitionEnd(element) {
+    var evt = document.createEvent('HTMLEvents');
+    evt.initEvent(TRANSITION_END, true, true);
+    element.dispatchEvent(evt);
+  };
+
   var isElement = function isElement(obj) {
     return (obj[0] || obj).nodeType;
+  };
+
+  var emulateTransitionEnd = function emulateTransitionEnd(element, duration) {
+    var called = false;
+    var durationPadding = 5;
+    var emulatedDuration = duration + durationPadding;
+
+    function listener() {
+      called = true;
+      element.removeEventListener(TRANSITION_END, listener);
+    }
+
+    element.addEventListener(TRANSITION_END, listener);
+    setTimeout(function () {
+      if (!called) {
+        triggerTransitionEnd(element);
+      }
+    }, emulatedDuration);
   };
 
   var typeCheckConfig = function typeCheckConfig(componentName, config, configTypes) {
@@ -129,54 +177,48 @@
    */
 
   var NAME = 'sidebar';
-  var VERSION = '1.0.0';
+  var VERSION = '1.0.1';
   var DATA_KEY = 'xcodiui.sidebar';
   var EVENT_KEY = "." + DATA_KEY;
   var DATA_API_KEY = '.data-api';
   var Default = {
+    activeLinksExact: true,
     breakpoints: {
-      xs: 'xc-sidebar-show',
-      sm: 'xc-sidebar-sm-show',
-      md: 'xc-sidebar-md-show',
-      lg: 'xc-sidebar-lg-show',
-      xl: 'xc-sidebar-xl-show'
+      xs: 'c-sidebar-show',
+      sm: 'c-sidebar-sm-show',
+      md: 'c-sidebar-md-show',
+      lg: 'c-sidebar-lg-show',
+      xl: 'c-sidebar-xl-show',
+      xxl: 'c-sidebar-xxl-show'
     },
     dropdownAccordion: true
   };
   var DefaultType = {
+    activeLinksExact: 'boolean',
     breakpoints: 'object',
     dropdownAccordion: '(string|boolean)'
   };
-  var ClassName = {
-    ACTIVE: 'xc-active',
-    BACKDROP: 'xc-sidebar-backdrop',
-    FADE: 'xc-fade',
-    NAV_DROPDOWN: 'xc-sidebar-nav-dropdown',
-    NAV_DROPDOWN_TOGGLE: 'xc-sidebar-nav-dropdown-toggle',
-    SHOW: 'xc-show',
-    SIDEBAR_MINIMIZED: 'xc-sidebar-minimized',
-    SIDEBAR_OVERLAID: 'xc-sidebar-overlaid',
-    SIDEBAR_SHOW: 'xc-sidebar-show',
-    SIDEBAR_UNFOLDABLE: 'xc-sidebar-unfoldable'
-  };
-  var Event = {
-    CLASS_TOGGLE: 'classtoggle',
-    CLICK_DATA_API: "click" + EVENT_KEY + DATA_API_KEY,
-    CLOSE: "close" + EVENT_KEY,
-    CLOSED: "closed" + EVENT_KEY,
-    LOAD_DATA_API: "load" + EVENT_KEY + DATA_API_KEY,
-    OPEN: "open" + EVENT_KEY,
-    OPENED: "opened" + EVENT_KEY
-  };
-  var Selector = {
-    NAV_DROPDOWN_TOGGLE: '.xc-sidebar-nav-dropdown-toggle',
-    NAV_DROPDOWN: '.xc-sidebar-nav-dropdown',
-    NAV_LINK: '.xc-sidebar-nav-link',
-    NAVIGATION_CONTAINER: '.xc-sidebar-nav',
-    // eslint-disable-next-line unicorn/no-unused-properties
-    NAVIGATION_DROPDOWN_ITEMS: '.xc-sidebar-nav-dropdown-items',
-    SIDEBAR: '.xc-sidebar'
-  };
+  var CLASS_NAME_ACTIVE = 'c-active';
+  var CLASS_NAME_BACKDROP = 'c-sidebar-backdrop';
+  var CLASS_NAME_FADE = 'c-fade';
+  var CLASS_NAME_NAV_DROPDOWN = 'c-sidebar-nav-dropdown';
+  var CLASS_NAME_NAV_DROPDOWN_TOGGLE = 'c-sidebar-nav-dropdown-toggle';
+  var CLASS_NAME_SHOW = 'c-show';
+  var CLASS_NAME_SIDEBAR_MINIMIZED = 'c-sidebar-minimized';
+  var CLASS_NAME_SIDEBAR_OVERLAID = 'c-sidebar-overlaid';
+  var CLASS_NAME_SIDEBAR_UNFOLDABLE = 'c-sidebar-unfoldable';
+  var EVENT_CLASS_TOGGLE = 'classtoggle';
+  var EVENT_CLICK_DATA_API = "click" + EVENT_KEY + DATA_API_KEY;
+  var EVENT_CLOSE = "close" + EVENT_KEY;
+  var EVENT_CLOSED = "closed" + EVENT_KEY;
+  var EVENT_LOAD_DATA_API = "load" + EVENT_KEY + DATA_API_KEY;
+  var EVENT_OPEN = "open" + EVENT_KEY;
+  var EVENT_OPENED = "opened" + EVENT_KEY;
+  var SELECTOR_NAV_DROPDOWN_TOGGLE = '.c-sidebar-nav-dropdown-toggle';
+  var SELECTOR_NAV_DROPDOWN = '.c-sidebar-nav-dropdown';
+  var SELECTOR_NAV_LINK = '.c-sidebar-nav-link';
+  var SELECTOR_NAVIGATION_CONTAINER = '.c-sidebar-nav';
+  var SELECTOR_SIDEBAR = '.c-sidebar';
   /**
    * ------------------------------------------------------------------------
    * Class Definition
@@ -186,7 +228,7 @@
   var Sidebar = /*#__PURE__*/function () {
     function Sidebar(element, config) {
       if (typeof PerfectScrollbar === 'undefined') {
-        throw new TypeError('xcodi\'s sidebar require Perfect Scrollbar');
+        throw new TypeError('XcodiUI sidebar require Perfect Scrollbar');
       }
 
       this._element = element;
@@ -216,7 +258,7 @@
     _proto.open = function open(breakpoint) {
       var _this = this;
 
-      EventHandler.trigger(this._element, Event.OPEN);
+      EventHandler.trigger(this._element, EVENT_OPEN);
 
       if (this._isMobile()) {
         this._addClassName(this._firstBreakpointClassName());
@@ -228,24 +270,38 @@
         });
       } else if (breakpoint) {
         this._addClassName(this._getBreakpointClassName(breakpoint));
+
+        if (this._isOverlaid()) {
+          EventHandler.one(this._element, TRANSITION_END, function () {
+            _this._addClickOutListener();
+          });
+        }
       } else {
         this._addClassName(this._firstBreakpointClassName());
+
+        if (this._isOverlaid()) {
+          EventHandler.one(this._element, TRANSITION_END, function () {
+            _this._addClickOutListener();
+          });
+        }
       }
 
       var complete = function complete() {
         if (_this._isVisible() === true) {
           _this._open = true;
-          EventHandler.trigger(_this._element, Event.OPENED);
+          EventHandler.trigger(_this._element, EVENT_OPENED);
         }
       };
 
+      var transitionDuration = getTransitionDurationFromElement(this._element);
       EventHandler.one(this._element, TRANSITION_END, complete);
+      emulateTransitionEnd(this._element, transitionDuration);
     };
 
     _proto.close = function close(breakpoint) {
       var _this2 = this;
 
-      EventHandler.trigger(this._element, Event.CLOSE);
+      EventHandler.trigger(this._element, EVENT_CLOSE);
 
       if (this._isMobile()) {
         this._element.classList.remove(this._firstBreakpointClassName());
@@ -255,18 +311,28 @@
         this._removeClickOutListener();
       } else if (breakpoint) {
         this._element.classList.remove(this._getBreakpointClassName(breakpoint));
+
+        if (this._isOverlaid()) {
+          this._removeClickOutListener();
+        }
       } else {
         this._element.classList.remove(this._firstBreakpointClassName());
+
+        if (this._isOverlaid()) {
+          this._removeClickOutListener();
+        }
       }
 
       var complete = function complete() {
         if (_this2._isVisible() === false) {
           _this2._open = false;
-          EventHandler.trigger(_this2._element, Event.CLOSED);
+          EventHandler.trigger(_this2._element, EVENT_CLOSED);
         }
       };
 
+      var transitionDuration = getTransitionDurationFromElement(this._element);
       EventHandler.one(this._element, TRANSITION_END, complete);
+      emulateTransitionEnd(this._element, transitionDuration);
     };
 
     _proto.toggle = function toggle(breakpoint) {
@@ -279,7 +345,7 @@
 
     _proto.minimize = function minimize() {
       if (!this._isMobile()) {
-        this._addClassName(ClassName.SIDEBAR_MINIMIZED);
+        this._addClassName(CLASS_NAME_SIDEBAR_MINIMIZED);
 
         this._minimize = true;
 
@@ -289,22 +355,22 @@
 
     _proto.unfoldable = function unfoldable() {
       if (!this._isMobile()) {
-        this._addClassName(ClassName.SIDEBAR_UNFOLDABLE);
+        this._addClassName(CLASS_NAME_SIDEBAR_UNFOLDABLE);
 
         this._unfoldable = true;
       }
     };
 
     _proto.reset = function reset() {
-      if (this._element.classList.contains(ClassName.SIDEBAR_MINIMIZED)) {
-        this._element.classList.remove(ClassName.SIDEBAR_MINIMIZED);
+      if (this._element.classList.contains(CLASS_NAME_SIDEBAR_MINIMIZED)) {
+        this._element.classList.remove(CLASS_NAME_SIDEBAR_MINIMIZED);
 
         this._minimize = false;
         EventHandler.one(this._element, TRANSITION_END, this._psInit());
       }
 
-      if (this._element.classList.contains(ClassName.SIDEBAR_UNFOLDABLE)) {
-        this._element.classList.remove(ClassName.SIDEBAR_UNFOLDABLE);
+      if (this._element.classList.contains(CLASS_NAME_SIDEBAR_UNFOLDABLE)) {
+        this._element.classList.remove(CLASS_NAME_SIDEBAR_UNFOLDABLE);
 
         this._unfoldable = false;
       }
@@ -321,16 +387,31 @@
       return Boolean(window.getComputedStyle(this._element, null).getPropertyValue('--is-mobile'));
     };
 
+    _proto._isIOS = function _isIOS() {
+      var iOSDevices = ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'];
+      var platform = Boolean(navigator.platform);
+
+      if (platform) {
+        while (iOSDevices.length) {
+          if (navigator.platform === iOSDevices.pop()) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    };
+
     _proto._isMinimized = function _isMinimized() {
-      return this._element.classList.contains(ClassName.SIDEBAR_MINIMIZED);
+      return this._element.classList.contains(CLASS_NAME_SIDEBAR_MINIMIZED);
     };
 
     _proto._isOverlaid = function _isOverlaid() {
-      return this._element.classList.contains(ClassName.SIDEBAR_OVERLAID);
+      return this._element.classList.contains(CLASS_NAME_SIDEBAR_OVERLAID);
     };
 
     _proto._isUnfoldable = function _isUnfoldable() {
-      return this._element.classList.contains(ClassName.SIDEBAR_UNFOLDABLE);
+      return this._element.classList.contains(CLASS_NAME_SIDEBAR_UNFOLDABLE);
     };
 
     _proto._isVisible = function _isVisible() {
@@ -368,19 +449,19 @@
     _proto._showBackdrop = function _showBackdrop() {
       if (!this._backdrop) {
         this._backdrop = document.createElement('div');
-        this._backdrop.className = ClassName.BACKDROP;
+        this._backdrop.className = CLASS_NAME_BACKDROP;
 
-        this._backdrop.classList.add(ClassName.FADE);
+        this._backdrop.classList.add(CLASS_NAME_FADE);
 
         document.body.appendChild(this._backdrop);
         reflow(this._backdrop);
 
-        this._backdrop.classList.add(ClassName.SHOW);
+        this._backdrop.classList.add(CLASS_NAME_SHOW);
       }
     };
 
     _proto._clickOutListener = function _clickOutListener(event, sidebar) {
-      if (event.target.closest(Selector.SIDEBAR) === null) {
+      if (event.target.closest(SELECTOR_SIDEBAR) === null) {
         // or use:
         event.preventDefault();
         event.stopPropagation();
@@ -391,13 +472,13 @@
     _proto._addClickOutListener = function _addClickOutListener() {
       var _this3 = this;
 
-      EventHandler.on(document, Event.CLICK_DATA_API, function (event) {
+      EventHandler.on(document, EVENT_CLICK_DATA_API, function (event) {
         _this3._clickOutListener(event, _this3);
       });
     };
 
     _proto._removeClickOutListener = function _removeClickOutListener() {
-      EventHandler.off(document, Event.CLICK_DATA_API);
+      EventHandler.off(document, EVENT_CLICK_DATA_API);
     } // Sidebar navigation
     ;
 
@@ -408,6 +489,10 @@
       do {
         if (element.nodeType === 3) {
           continue; // text node
+        }
+
+        if (element.nodeType === 8) {
+          continue; // comment node
         }
 
         if (!filter || filter(element)) {
@@ -422,36 +507,41 @@
     _proto._toggleDropdown = function _toggleDropdown(event, sidebar) {
       var toggler = event.target;
 
-      if (!toggler.classList.contains(ClassName.NAV_DROPDOWN_TOGGLE)) {
-        toggler = toggler.closest(Selector.NAV_DROPDOWN_TOGGLE);
+      if (!toggler.classList.contains(CLASS_NAME_NAV_DROPDOWN_TOGGLE)) {
+        toggler = toggler.closest(SELECTOR_NAV_DROPDOWN_TOGGLE);
       }
 
-      var dataAttributes = toggler.closest(Selector.NAVIGATION_CONTAINER).dataset;
+      var dataAttributes = toggler.closest(SELECTOR_NAVIGATION_CONTAINER).dataset;
 
       if (typeof dataAttributes.dropdownAccordion !== 'undefined') {
         Default.dropdownAccordion = JSON.parse(dataAttributes.dropdownAccordion);
-      }
+      } // TODO: find better solution
+
 
       if (Default.dropdownAccordion === true) {
-        this._getAllSiblings(toggler.parentElement).forEach(function (element) {
+        this._getAllSiblings(toggler.parentElement, function (element) {
+          return Boolean(element.classList.contains(CLASS_NAME_NAV_DROPDOWN));
+        }).forEach(function (element) {
           if (element !== toggler.parentNode) {
-            if (element.classList.contains(ClassName.NAV_DROPDOWN)) {
-              element.classList.remove(ClassName.SHOW);
+            if (element.classList.contains(CLASS_NAME_NAV_DROPDOWN)) {
+              element.classList.remove(CLASS_NAME_SHOW);
             }
           }
         });
       }
 
-      toggler.parentNode.classList.toggle(ClassName.SHOW);
+      toggler.parentNode.classList.toggle(CLASS_NAME_SHOW); // TODO: Set the toggler's position near to cursor after the click.
+      // TODO: add transition end
 
       sidebar._psUpdate();
     } // PerfectScrollbar
     ;
 
     _proto._psInit = function _psInit() {
-      if (this._element.querySelector(Selector.NAVIGATION_CONTAINER)) {
-        this._ps = new PerfectScrollbar(this._element.querySelector(Selector.NAVIGATION_CONTAINER), {
-          suppressScrollX: true
+      if (this._element.querySelector(SELECTOR_NAVIGATION_CONTAINER) && !this._isIOS()) {
+        this._ps = new PerfectScrollbar(this._element.querySelector(SELECTOR_NAVIGATION_CONTAINER), {
+          suppressScrollX: true,
+          wheelPropagation: false
         });
       }
     };
@@ -460,11 +550,6 @@
       if (this._ps) {
         this._ps.update();
       }
-    };
-
-    _proto._psScrollActive = function _psScrollActive() {
-      var activeLink = document.querySelector(ClassName.ACTIVE);
-      activeLink.scrollTop = 0;
     };
 
     _proto._psDestroy = function _psDestroy() {
@@ -497,7 +582,7 @@
       var _this4 = this;
 
       // eslint-disable-next-line unicorn/prefer-spread
-      Array.from(this._element.querySelectorAll(Selector.NAV_LINK)).forEach(function (element) {
+      Array.from(this._element.querySelectorAll(SELECTOR_NAV_LINK)).forEach(function (element) {
         var currentUrl;
         var urlHasParams = /\\?.*=/;
         var urlHasQueryString = /\\?./;
@@ -515,11 +600,25 @@
           currentUrl = currentUrl.slice(0, -1);
         }
 
-        if (element.href === currentUrl) {
-          element.classList.add(ClassName.ACTIVE); // eslint-disable-next-line unicorn/prefer-spread
+        var dataAttributes = element.closest(SELECTOR_NAVIGATION_CONTAINER).dataset;
 
-          Array.from(_this4._getParents(element, Selector.NAV_DROPDOWN)).forEach(function (element) {
-            element.classList.add(ClassName.SHOW);
+        if (typeof dataAttributes.activeLinksExact !== 'undefined') {
+          Default.activeLinksExact = JSON.parse(dataAttributes.activeLinksExact);
+        }
+
+        if (Default.activeLinksExact && element.href === currentUrl) {
+          element.classList.add(CLASS_NAME_ACTIVE); // eslint-disable-next-line unicorn/prefer-spread
+
+          Array.from(_this4._getParents(element, SELECTOR_NAV_DROPDOWN)).forEach(function (element) {
+            element.classList.add(CLASS_NAME_SHOW);
+          });
+        }
+
+        if (!Default.activeLinksExact && element.href.startsWith(currentUrl)) {
+          element.classList.add(CLASS_NAME_ACTIVE); // eslint-disable-next-line unicorn/prefer-spread
+
+          Array.from(_this4._getParents(element, SELECTOR_NAV_DROPDOWN)).forEach(function (element) {
+            element.classList.add(CLASS_NAME_SHOW);
           });
         }
       });
@@ -536,17 +635,17 @@
         this._addClickOutListener();
       }
 
-      EventHandler.on(this._element, Event.CLASS_TOGGLE, function (event) {
-        if (event.detail.className === ClassName.SIDEBAR_MINIMIZED) {
-          if (_this5._element.classList.contains(ClassName.SIDEBAR_MINIMIZED)) {
+      EventHandler.on(this._element, EVENT_CLASS_TOGGLE, function (event) {
+        if (event.detail.className === CLASS_NAME_SIDEBAR_MINIMIZED) {
+          if (_this5._element.classList.contains(CLASS_NAME_SIDEBAR_MINIMIZED)) {
             _this5.minimize();
           } else {
             _this5.reset();
           }
         }
 
-        if (event.detail.className === ClassName.SIDEBAR_UNFOLDABLE) {
-          if (_this5._element.classList.contains(ClassName.SIDEBAR_UNFOLDABLE)) {
+        if (event.detail.className === CLASS_NAME_SIDEBAR_UNFOLDABLE) {
+          if (_this5._element.classList.contains(CLASS_NAME_SIDEBAR_UNFOLDABLE)) {
             _this5.unfoldable();
           } else {
             _this5.reset();
@@ -568,12 +667,12 @@
           }
         }
       });
-      EventHandler.on(this._element, Event.CLICK_DATA_API, Selector.NAV_DROPDOWN_TOGGLE, function (event) {
+      EventHandler.on(this._element, EVENT_CLICK_DATA_API, SELECTOR_NAV_DROPDOWN_TOGGLE, function (event) {
         event.preventDefault();
 
         _this5._toggleDropdown(event, _this5);
       });
-      EventHandler.on(this._element, Event.CLICK_DATA_API, Selector.NAV_LINK, function () {
+      EventHandler.on(this._element, EVENT_CLICK_DATA_API, SELECTOR_NAV_LINK, function () {
         if (_this5._isMobile()) {
           _this5.close();
         }
@@ -635,9 +734,9 @@
    */
 
 
-  EventHandler.on(window, Event.LOAD_DATA_API, function () {
+  EventHandler.on(window, EVENT_LOAD_DATA_API, function () {
     // eslint-disable-next-line unicorn/prefer-spread
-    Array.from(document.querySelectorAll(Selector.SIDEBAR)).forEach(function (element) {
+    Array.from(document.querySelectorAll(SELECTOR_SIDEBAR)).forEach(function (element) {
       Sidebar._sidebarInterface(element);
     });
   });

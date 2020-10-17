@@ -171,14 +171,6 @@
     });
   };
 
-  var makeArray = function makeArray(nodeList) {
-    if (!nodeList) {
-      return [];
-    }
-
-    return [].slice.call(nodeList);
-  };
-
   var isVisible = function isVisible(element) {
     if (!element) {
       return false;
@@ -215,14 +207,12 @@
    */
 
   var NAME = 'carousel';
-  var VERSION = '1.0.0';
+  var VERSION = '1.0.1';
   var DATA_KEY = 'xcodiui.carousel';
   var EVENT_KEY = "." + DATA_KEY;
   var DATA_API_KEY = '.data-api';
-  var ARROW_LEFT_KEYCODE = 37; // KeyboardEvent.which value for left arrow key
-
-  var ARROW_RIGHT_KEYCODE = 39; // KeyboardEvent.which value for right arrow key
-
+  var ARROW_LEFT_KEY = 'ArrowLeft';
+  var ARROW_RIGHT_KEY = 'ArrowRight';
   var TOUCHEVENT_COMPAT_WAIT = 500; // Time for mouse compat events to fire after touch
 
   var SWIPE_THRESHOLD = 40;
@@ -242,48 +232,39 @@
     wrap: 'boolean',
     touch: 'boolean'
   };
-  var Direction = {
-    NEXT: 'next',
-    PREV: 'prev',
-    LEFT: 'left',
-    RIGHT: 'right'
-  };
-  var Event = {
-    SLIDE: "slide" + EVENT_KEY,
-    SLID: "slid" + EVENT_KEY,
-    KEYDOWN: "keydown" + EVENT_KEY,
-    MOUSEENTER: "mouseenter" + EVENT_KEY,
-    MOUSELEAVE: "mouseleave" + EVENT_KEY,
-    TOUCHSTART: "touchstart" + EVENT_KEY,
-    TOUCHMOVE: "touchmove" + EVENT_KEY,
-    TOUCHEND: "touchend" + EVENT_KEY,
-    POINTERDOWN: "pointerdown" + EVENT_KEY,
-    POINTERUP: "pointerup" + EVENT_KEY,
-    DRAG_START: "dragstart" + EVENT_KEY,
-    LOAD_DATA_API: "load" + EVENT_KEY + DATA_API_KEY,
-    CLICK_DATA_API: "click" + EVENT_KEY + DATA_API_KEY
-  };
-  var ClassName = {
-    CAROUSEL: 'carousel',
-    ACTIVE: 'active',
-    SLIDE: 'slide',
-    RIGHT: 'carousel-item-right',
-    LEFT: 'carousel-item-left',
-    NEXT: 'carousel-item-next',
-    PREV: 'carousel-item-prev',
-    ITEM: 'carousel-item',
-    POINTER_EVENT: 'pointer-event'
-  };
-  var Selector = {
-    ACTIVE: '.active',
-    ACTIVE_ITEM: '.active.carousel-item',
-    ITEM: '.carousel-item',
-    ITEM_IMG: '.carousel-item img',
-    NEXT_PREV: '.carousel-item-next, .carousel-item-prev',
-    INDICATORS: '.carousel-indicators',
-    DATA_SLIDE: '[data-slide], [data-slide-to]',
-    DATA_RIDE: '[data-ride="carousel"]'
-  };
+  var DIRECTION_NEXT = 'next';
+  var DIRECTION_PREV = 'prev';
+  var DIRECTION_LEFT = 'left';
+  var DIRECTION_RIGHT = 'right';
+  var EVENT_SLIDE = "slide" + EVENT_KEY;
+  var EVENT_SLID = "slid" + EVENT_KEY;
+  var EVENT_KEYDOWN = "keydown" + EVENT_KEY;
+  var EVENT_MOUSEENTER = "mouseenter" + EVENT_KEY;
+  var EVENT_MOUSELEAVE = "mouseleave" + EVENT_KEY;
+  var EVENT_TOUCHSTART = "touchstart" + EVENT_KEY;
+  var EVENT_TOUCHMOVE = "touchmove" + EVENT_KEY;
+  var EVENT_TOUCHEND = "touchend" + EVENT_KEY;
+  var EVENT_POINTERDOWN = "pointerdown" + EVENT_KEY;
+  var EVENT_POINTERUP = "pointerup" + EVENT_KEY;
+  var EVENT_DRAG_START = "dragstart" + EVENT_KEY;
+  var EVENT_LOAD_DATA_API = "load" + EVENT_KEY + DATA_API_KEY;
+  var EVENT_CLICK_DATA_API = "click" + EVENT_KEY + DATA_API_KEY;
+  var CLASS_NAME_CAROUSEL = 'carousel';
+  var CLASS_NAME_ACTIVE = 'active';
+  var CLASS_NAME_SLIDE = 'slide';
+  var CLASS_NAME_RIGHT = 'carousel-item-right';
+  var CLASS_NAME_LEFT = 'carousel-item-left';
+  var CLASS_NAME_NEXT = 'carousel-item-next';
+  var CLASS_NAME_PREV = 'carousel-item-prev';
+  var CLASS_NAME_POINTER_EVENT = 'pointer-event';
+  var SELECTOR_ACTIVE = '.active';
+  var SELECTOR_ACTIVE_ITEM = '.active.carousel-item';
+  var SELECTOR_ITEM = '.carousel-item';
+  var SELECTOR_ITEM_IMG = '.carousel-item img';
+  var SELECTOR_NEXT_PREV = '.carousel-item-next, .carousel-item-prev';
+  var SELECTOR_INDICATORS = '.carousel-indicators';
+  var SELECTOR_DATA_SLIDE = '[data-slide], [data-slide-to]';
+  var SELECTOR_DATA_RIDE = '[data-ride="carousel"]';
   var PointerType = {
     TOUCH: 'touch',
     PEN: 'pen'
@@ -306,7 +287,7 @@
       this.touchDeltaX = 0;
       this._config = this._getConfig(config);
       this._element = element;
-      this._indicatorsElement = SelectorEngine.findOne(Selector.INDICATORS, this._element);
+      this._indicatorsElement = SelectorEngine.findOne(SELECTOR_INDICATORS, this._element);
       this._touchSupported = 'ontouchstart' in document.documentElement || navigator.maxTouchPoints > 0;
       this._pointerEvent = Boolean(window.PointerEvent || window.MSPointerEvent);
 
@@ -321,7 +302,7 @@
     // Public
     _proto.next = function next() {
       if (!this._isSliding) {
-        this._slide(Direction.NEXT);
+        this._slide(DIRECTION_NEXT);
       }
     };
 
@@ -335,7 +316,7 @@
 
     _proto.prev = function prev() {
       if (!this._isSliding) {
-        this._slide(Direction.PREV);
+        this._slide(DIRECTION_PREV);
       }
     };
 
@@ -344,7 +325,7 @@
         this._isPaused = true;
       }
 
-      if (SelectorEngine.findOne(Selector.NEXT_PREV, this._element)) {
+      if (SelectorEngine.findOne(SELECTOR_NEXT_PREV, this._element)) {
         triggerTransitionEnd(this._element);
         this.cycle(true);
       }
@@ -371,7 +352,7 @@
     _proto.to = function to(index) {
       var _this = this;
 
-      this._activeElement = SelectorEngine.findOne(Selector.ACTIVE_ITEM, this._element);
+      this._activeElement = SelectorEngine.findOne(SELECTOR_ACTIVE_ITEM, this._element);
 
       var activeIndex = this._getItemIndex(this._activeElement);
 
@@ -380,7 +361,7 @@
       }
 
       if (this._isSliding) {
-        EventHandler.one(this._element, Event.SLID, function () {
+        EventHandler.one(this._element, EVENT_SLID, function () {
           return _this.to(index);
         });
         return;
@@ -392,7 +373,7 @@
         return;
       }
 
-      var direction = index > activeIndex ? Direction.NEXT : Direction.PREV;
+      var direction = index > activeIndex ? DIRECTION_NEXT : DIRECTION_PREV;
 
       this._slide(direction, this._items[index]);
     };
@@ -441,16 +422,16 @@
       var _this2 = this;
 
       if (this._config.keyboard) {
-        EventHandler.on(this._element, Event.KEYDOWN, function (event) {
+        EventHandler.on(this._element, EVENT_KEYDOWN, function (event) {
           return _this2._keydown(event);
         });
       }
 
       if (this._config.pause === 'hover') {
-        EventHandler.on(this._element, Event.MOUSEENTER, function (event) {
+        EventHandler.on(this._element, EVENT_MOUSEENTER, function (event) {
           return _this2.pause(event);
         });
-        EventHandler.on(this._element, Event.MOUSELEAVE, function (event) {
+        EventHandler.on(this._element, EVENT_MOUSELEAVE, function (event) {
           return _this2.cycle(event);
         });
       }
@@ -507,29 +488,29 @@
         }
       };
 
-      makeArray(SelectorEngine.find(Selector.ITEM_IMG, this._element)).forEach(function (itemImg) {
-        EventHandler.on(itemImg, Event.DRAG_START, function (e) {
+      SelectorEngine.find(SELECTOR_ITEM_IMG, this._element).forEach(function (itemImg) {
+        EventHandler.on(itemImg, EVENT_DRAG_START, function (e) {
           return e.preventDefault();
         });
       });
 
       if (this._pointerEvent) {
-        EventHandler.on(this._element, Event.POINTERDOWN, function (event) {
+        EventHandler.on(this._element, EVENT_POINTERDOWN, function (event) {
           return start(event);
         });
-        EventHandler.on(this._element, Event.POINTERUP, function (event) {
+        EventHandler.on(this._element, EVENT_POINTERUP, function (event) {
           return end(event);
         });
 
-        this._element.classList.add(ClassName.POINTER_EVENT);
+        this._element.classList.add(CLASS_NAME_POINTER_EVENT);
       } else {
-        EventHandler.on(this._element, Event.TOUCHSTART, function (event) {
+        EventHandler.on(this._element, EVENT_TOUCHSTART, function (event) {
           return start(event);
         });
-        EventHandler.on(this._element, Event.TOUCHMOVE, function (event) {
+        EventHandler.on(this._element, EVENT_TOUCHMOVE, function (event) {
           return move(event);
         });
-        EventHandler.on(this._element, Event.TOUCHEND, function (event) {
+        EventHandler.on(this._element, EVENT_TOUCHEND, function (event) {
           return end(event);
         });
       }
@@ -540,13 +521,13 @@
         return;
       }
 
-      switch (event.which) {
-        case ARROW_LEFT_KEYCODE:
+      switch (event.key) {
+        case ARROW_LEFT_KEY:
           event.preventDefault();
           this.prev();
           break;
 
-        case ARROW_RIGHT_KEYCODE:
+        case ARROW_RIGHT_KEY:
           event.preventDefault();
           this.next();
           break;
@@ -554,13 +535,13 @@
     };
 
     _proto._getItemIndex = function _getItemIndex(element) {
-      this._items = element && element.parentNode ? makeArray(SelectorEngine.find(Selector.ITEM, element.parentNode)) : [];
+      this._items = element && element.parentNode ? SelectorEngine.find(SELECTOR_ITEM, element.parentNode) : [];
       return this._items.indexOf(element);
     };
 
     _proto._getItemByDirection = function _getItemByDirection(direction, activeElement) {
-      var isNextDirection = direction === Direction.NEXT;
-      var isPrevDirection = direction === Direction.PREV;
+      var isNextDirection = direction === DIRECTION_NEXT;
+      var isPrevDirection = direction === DIRECTION_PREV;
 
       var activeIndex = this._getItemIndex(activeElement);
 
@@ -571,7 +552,7 @@
         return activeElement;
       }
 
-      var delta = direction === Direction.PREV ? -1 : 1;
+      var delta = direction === DIRECTION_PREV ? -1 : 1;
       var itemIndex = (activeIndex + delta) % this._items.length;
       return itemIndex === -1 ? this._items[this._items.length - 1] : this._items[itemIndex];
     };
@@ -579,9 +560,9 @@
     _proto._triggerSlideEvent = function _triggerSlideEvent(relatedTarget, eventDirectionName) {
       var targetIndex = this._getItemIndex(relatedTarget);
 
-      var fromIndex = this._getItemIndex(SelectorEngine.findOne(Selector.ACTIVE_ITEM, this._element));
+      var fromIndex = this._getItemIndex(SelectorEngine.findOne(SELECTOR_ACTIVE_ITEM, this._element));
 
-      return EventHandler.trigger(this._element, Event.SLIDE, {
+      return EventHandler.trigger(this._element, EVENT_SLIDE, {
         relatedTarget: relatedTarget,
         direction: eventDirectionName,
         from: fromIndex,
@@ -591,16 +572,16 @@
 
     _proto._setActiveIndicatorElement = function _setActiveIndicatorElement(element) {
       if (this._indicatorsElement) {
-        var indicators = SelectorEngine.find(Selector.ACTIVE, this._indicatorsElement);
+        var indicators = SelectorEngine.find(SELECTOR_ACTIVE, this._indicatorsElement);
 
         for (var i = 0; i < indicators.length; i++) {
-          indicators[i].classList.remove(ClassName.ACTIVE);
+          indicators[i].classList.remove(CLASS_NAME_ACTIVE);
         }
 
         var nextIndicator = this._indicatorsElement.children[this._getItemIndex(element)];
 
         if (nextIndicator) {
-          nextIndicator.classList.add(ClassName.ACTIVE);
+          nextIndicator.classList.add(CLASS_NAME_ACTIVE);
         }
       }
     };
@@ -608,7 +589,7 @@
     _proto._slide = function _slide(direction, element) {
       var _this4 = this;
 
-      var activeElement = SelectorEngine.findOne(Selector.ACTIVE_ITEM, this._element);
+      var activeElement = SelectorEngine.findOne(SELECTOR_ACTIVE_ITEM, this._element);
 
       var activeElementIndex = this._getItemIndex(activeElement);
 
@@ -621,17 +602,17 @@
       var orderClassName;
       var eventDirectionName;
 
-      if (direction === Direction.NEXT) {
-        directionalClassName = ClassName.LEFT;
-        orderClassName = ClassName.NEXT;
-        eventDirectionName = Direction.LEFT;
+      if (direction === DIRECTION_NEXT) {
+        directionalClassName = CLASS_NAME_LEFT;
+        orderClassName = CLASS_NAME_NEXT;
+        eventDirectionName = DIRECTION_LEFT;
       } else {
-        directionalClassName = ClassName.RIGHT;
-        orderClassName = ClassName.PREV;
-        eventDirectionName = Direction.RIGHT;
+        directionalClassName = CLASS_NAME_RIGHT;
+        orderClassName = CLASS_NAME_PREV;
+        eventDirectionName = DIRECTION_RIGHT;
       }
 
-      if (nextElement && nextElement.classList.contains(ClassName.ACTIVE)) {
+      if (nextElement && nextElement.classList.contains(CLASS_NAME_ACTIVE)) {
         this._isSliding = false;
         return;
       }
@@ -655,7 +636,7 @@
 
       this._setActiveIndicatorElement(nextElement);
 
-      if (this._element.classList.contains(ClassName.SLIDE)) {
+      if (this._element.classList.contains(CLASS_NAME_SLIDE)) {
         nextElement.classList.add(orderClassName);
         reflow(nextElement);
         activeElement.classList.add(directionalClassName);
@@ -671,15 +652,12 @@
 
         var transitionDuration = getTransitionDurationFromElement(activeElement);
         EventHandler.one(activeElement, TRANSITION_END, function () {
-          nextElement.classList.remove(directionalClassName);
-          nextElement.classList.remove(orderClassName);
-          nextElement.classList.add(ClassName.ACTIVE);
-          activeElement.classList.remove(ClassName.ACTIVE);
-          activeElement.classList.remove(orderClassName);
-          activeElement.classList.remove(directionalClassName);
+          nextElement.classList.remove(directionalClassName, orderClassName);
+          nextElement.classList.add(CLASS_NAME_ACTIVE);
+          activeElement.classList.remove(CLASS_NAME_ACTIVE, orderClassName, directionalClassName);
           _this4._isSliding = false;
           setTimeout(function () {
-            EventHandler.trigger(_this4._element, Event.SLID, {
+            EventHandler.trigger(_this4._element, EVENT_SLID, {
               relatedTarget: nextElement,
               direction: eventDirectionName,
               from: activeElementIndex,
@@ -689,10 +667,10 @@
         });
         emulateTransitionEnd(activeElement, transitionDuration);
       } else {
-        activeElement.classList.remove(ClassName.ACTIVE);
-        nextElement.classList.add(ClassName.ACTIVE);
+        activeElement.classList.remove(CLASS_NAME_ACTIVE);
+        nextElement.classList.add(CLASS_NAME_ACTIVE);
         this._isSliding = false;
-        EventHandler.trigger(this._element, Event.SLID, {
+        EventHandler.trigger(this._element, EVENT_SLID, {
           relatedTarget: nextElement,
           direction: eventDirectionName,
           from: activeElementIndex,
@@ -744,7 +722,7 @@
     Carousel.dataApiClickHandler = function dataApiClickHandler(event) {
       var target = getElementFromSelector(this);
 
-      if (!target || !target.classList.contains(ClassName.CAROUSEL)) {
+      if (!target || !target.classList.contains(CLASS_NAME_CAROUSEL)) {
         return;
       }
 
@@ -790,9 +768,9 @@
    */
 
 
-  EventHandler.on(document, Event.CLICK_DATA_API, Selector.DATA_SLIDE, Carousel.dataApiClickHandler);
-  EventHandler.on(window, Event.LOAD_DATA_API, function () {
-    var carousels = makeArray(SelectorEngine.find(Selector.DATA_RIDE));
+  EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_SLIDE, Carousel.dataApiClickHandler);
+  EventHandler.on(window, EVENT_LOAD_DATA_API, function () {
+    var carousels = SelectorEngine.find(SELECTOR_DATA_RIDE);
 
     for (var i = 0, len = carousels.length; i < len; i++) {
       Carousel.carouselInterface(carousels[i], Data.getData(carousels[i], DATA_KEY));

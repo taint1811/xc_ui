@@ -176,22 +176,18 @@
    */
 
   var NAME = 'toast';
-  var VERSION = '1.0.0';
+  var VERSION = '1.0.1';
   var DATA_KEY = 'xcodiui.toast';
   var EVENT_KEY = "." + DATA_KEY;
-  var Event = {
-    CLICK_DISMISS: "click.dismiss" + EVENT_KEY,
-    HIDE: "hide" + EVENT_KEY,
-    HIDDEN: "hidden" + EVENT_KEY,
-    SHOW: "show" + EVENT_KEY,
-    SHOWN: "shown" + EVENT_KEY
-  };
-  var ClassName = {
-    FADE: 'fade',
-    HIDE: 'hide',
-    SHOW: 'show',
-    SHOWING: 'showing'
-  };
+  var EVENT_CLICK_DISMISS = "click.dismiss" + EVENT_KEY;
+  var EVENT_HIDE = "hide" + EVENT_KEY;
+  var EVENT_HIDDEN = "hidden" + EVENT_KEY;
+  var EVENT_SHOW = "show" + EVENT_KEY;
+  var EVENT_SHOWN = "shown" + EVENT_KEY;
+  var CLASS_NAME_FADE = 'fade';
+  var CLASS_NAME_HIDE = 'hide';
+  var CLASS_NAME_SHOW = 'show';
+  var CLASS_NAME_SHOWING = 'showing';
   var DefaultType = {
     animation: 'boolean',
     autohide: 'boolean',
@@ -200,11 +196,9 @@
   var Default = {
     animation: true,
     autohide: true,
-    delay: 500
+    delay: 5000
   };
-  var Selector = {
-    DATA_DISMISS: '[data-dismiss="toast"]'
-  };
+  var SELECTOR_DATA_DISMISS = '[data-dismiss="toast"]';
   /**
    * ------------------------------------------------------------------------
    * Class Definition
@@ -229,22 +223,24 @@
     _proto.show = function show() {
       var _this = this;
 
-      var showEvent = EventHandler.trigger(this._element, Event.SHOW);
+      var showEvent = EventHandler.trigger(this._element, EVENT_SHOW);
 
       if (showEvent.defaultPrevented) {
         return;
       }
 
+      this._clearTimeout();
+
       if (this._config.animation) {
-        this._element.classList.add(ClassName.FADE);
+        this._element.classList.add(CLASS_NAME_FADE);
       }
 
       var complete = function complete() {
-        _this._element.classList.remove(ClassName.SHOWING);
+        _this._element.classList.remove(CLASS_NAME_SHOWING);
 
-        _this._element.classList.add(ClassName.SHOW);
+        _this._element.classList.add(CLASS_NAME_SHOW);
 
-        EventHandler.trigger(_this._element, Event.SHOWN);
+        EventHandler.trigger(_this._element, EVENT_SHOWN);
 
         if (_this._config.autohide) {
           _this._timeout = setTimeout(function () {
@@ -253,11 +249,11 @@
         }
       };
 
-      this._element.classList.remove(ClassName.HIDE);
+      this._element.classList.remove(CLASS_NAME_HIDE);
 
       reflow(this._element);
 
-      this._element.classList.add(ClassName.SHOWING);
+      this._element.classList.add(CLASS_NAME_SHOWING);
 
       if (this._config.animation) {
         var transitionDuration = getTransitionDurationFromElement(this._element);
@@ -271,23 +267,23 @@
     _proto.hide = function hide() {
       var _this2 = this;
 
-      if (!this._element.classList.contains(ClassName.SHOW)) {
+      if (!this._element.classList.contains(CLASS_NAME_SHOW)) {
         return;
       }
 
-      var hideEvent = EventHandler.trigger(this._element, Event.HIDE);
+      var hideEvent = EventHandler.trigger(this._element, EVENT_HIDE);
 
       if (hideEvent.defaultPrevented) {
         return;
       }
 
       var complete = function complete() {
-        _this2._element.classList.add(ClassName.HIDE);
+        _this2._element.classList.add(CLASS_NAME_HIDE);
 
-        EventHandler.trigger(_this2._element, Event.HIDDEN);
+        EventHandler.trigger(_this2._element, EVENT_HIDDEN);
       };
 
-      this._element.classList.remove(ClassName.SHOW);
+      this._element.classList.remove(CLASS_NAME_SHOW);
 
       if (this._config.animation) {
         var transitionDuration = getTransitionDurationFromElement(this._element);
@@ -299,14 +295,13 @@
     };
 
     _proto.dispose = function dispose() {
-      clearTimeout(this._timeout);
-      this._timeout = null;
+      this._clearTimeout();
 
-      if (this._element.classList.contains(ClassName.SHOW)) {
-        this._element.classList.remove(ClassName.SHOW);
+      if (this._element.classList.contains(CLASS_NAME_SHOW)) {
+        this._element.classList.remove(CLASS_NAME_SHOW);
       }
 
-      EventHandler.off(this._element, Event.CLICK_DISMISS);
+      EventHandler.off(this._element, EVENT_CLICK_DISMISS);
       Data.removeData(this._element, DATA_KEY);
       this._element = null;
       this._config = null;
@@ -322,9 +317,14 @@
     _proto._setListeners = function _setListeners() {
       var _this3 = this;
 
-      EventHandler.on(this._element, Event.CLICK_DISMISS, Selector.DATA_DISMISS, function () {
+      EventHandler.on(this._element, EVENT_CLICK_DISMISS, SELECTOR_DATA_DISMISS, function () {
         return _this3.hide();
       });
+    };
+
+    _proto._clearTimeout = function _clearTimeout() {
+      clearTimeout(this._timeout);
+      this._timeout = null;
     } // Static
     ;
 

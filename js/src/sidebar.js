@@ -1,7 +1,13 @@
+/**
+ * --------------------------------------------------------------------------
+ */
+
 import {
     getjQuery,
     reflow,
     TRANSITION_END,
+    emulateTransitionEnd,
+    getTransitionDurationFromElement,
     typeCheckConfig
 } from './util/index'
 import Data from './dom/data'
@@ -16,59 +22,53 @@ import PerfectScrollbar from 'perfect-scrollbar'
  */
 
 const NAME = 'sidebar'
-const VERSION = '1.0.0'
+const VERSION = '1.0.1'
 const DATA_KEY = 'xcodiui.sidebar'
 const EVENT_KEY = `.${DATA_KEY}`
 const DATA_API_KEY = '.data-api'
 
 const Default = {
+    activeLinksExact: true,
     breakpoints: {
-        xs: 'xc-sidebar-show',
-        sm: 'xc-sidebar-sm-show',
-        md: 'xc-sidebar-md-show',
-        lg: 'xc-sidebar-lg-show',
-        xl: 'xc-sidebar-xl-show'
+        xs: 'c-sidebar-show',
+        sm: 'c-sidebar-sm-show',
+        md: 'c-sidebar-md-show',
+        lg: 'c-sidebar-lg-show',
+        xl: 'c-sidebar-xl-show',
+        xxl: 'c-sidebar-xxl-show'
     },
     dropdownAccordion: true
 }
 
 const DefaultType = {
+    activeLinksExact: 'boolean',
     breakpoints: 'object',
     dropdownAccordion: '(string|boolean)'
 }
 
-const ClassName = {
-    ACTIVE: 'xc-active',
-    BACKDROP: 'xc-sidebar-backdrop',
-    FADE: 'xc-fade',
-    NAV_DROPDOWN: 'xc-sidebar-nav-dropdown',
-    NAV_DROPDOWN_TOGGLE: 'xc-sidebar-nav-dropdown-toggle',
-    SHOW: 'xc-show',
-    SIDEBAR_MINIMIZED: 'xc-sidebar-minimized',
-    SIDEBAR_OVERLAID: 'xc-sidebar-overlaid',
-    SIDEBAR_SHOW: 'xc-sidebar-show',
-    SIDEBAR_UNFOLDABLE: 'xc-sidebar-unfoldable'
-}
+const CLASS_NAME_ACTIVE = 'c-active'
+const CLASS_NAME_BACKDROP = 'c-sidebar-backdrop'
+const CLASS_NAME_FADE = 'c-fade'
+const CLASS_NAME_NAV_DROPDOWN = 'c-sidebar-nav-dropdown'
+const CLASS_NAME_NAV_DROPDOWN_TOGGLE = 'c-sidebar-nav-dropdown-toggle'
+const CLASS_NAME_SHOW = 'c-show'
+const CLASS_NAME_SIDEBAR_MINIMIZED = 'c-sidebar-minimized'
+const CLASS_NAME_SIDEBAR_OVERLAID = 'c-sidebar-overlaid'
+const CLASS_NAME_SIDEBAR_UNFOLDABLE = 'c-sidebar-unfoldable'
 
-const Event = {
-    CLASS_TOGGLE: 'classtoggle',
-    CLICK_DATA_API: `click${EVENT_KEY}${DATA_API_KEY}`,
-    CLOSE: `close${EVENT_KEY}`,
-    CLOSED: `closed${EVENT_KEY}`,
-    LOAD_DATA_API: `load${EVENT_KEY}${DATA_API_KEY}`,
-    OPEN: `open${EVENT_KEY}`,
-    OPENED: `opened${EVENT_KEY}`
-}
+const EVENT_CLASS_TOGGLE = 'classtoggle'
+const EVENT_CLICK_DATA_API = `click${EVENT_KEY}${DATA_API_KEY}`
+const EVENT_CLOSE = `close${EVENT_KEY}`
+const EVENT_CLOSED = `closed${EVENT_KEY}`
+const EVENT_LOAD_DATA_API = `load${EVENT_KEY}${DATA_API_KEY}`
+const EVENT_OPEN = `open${EVENT_KEY}`
+const EVENT_OPENED = `opened${EVENT_KEY}`
 
-const Selector = {
-    NAV_DROPDOWN_TOGGLE: '.xc-sidebar-nav-dropdown-toggle',
-    NAV_DROPDOWN: '.xc-sidebar-nav-dropdown',
-    NAV_LINK: '.xc-sidebar-nav-link',
-    NAVIGATION_CONTAINER: '.xc-sidebar-nav',
-    // eslint-disable-next-line unicorn/no-unused-properties
-    NAVIGATION_DROPDOWN_ITEMS: '.xc-sidebar-nav-dropdown-items',
-    SIDEBAR: '.xc-sidebar'
-}
+const SELECTOR_NAV_DROPDOWN_TOGGLE = '.c-sidebar-nav-dropdown-toggle'
+const SELECTOR_NAV_DROPDOWN = '.c-sidebar-nav-dropdown'
+const SELECTOR_NAV_LINK = '.c-sidebar-nav-link'
+const SELECTOR_NAVIGATION_CONTAINER = '.c-sidebar-nav'
+const SELECTOR_SIDEBAR = '.c-sidebar'
 
 /**
  * ------------------------------------------------------------------------
@@ -79,7 +79,7 @@ const Selector = {
 class Sidebar {
     constructor(element, config) {
         if (typeof PerfectScrollbar === 'undefined') {
-            throw new TypeError('xcodi\'s sidebar require Perfect Scrollbar')
+            throw new TypeError('XcodiUI sidebar require Perfect Scrollbar')
         }
 
         this._element = element
@@ -115,7 +115,7 @@ class Sidebar {
     // Public
 
     open(breakpoint) {
-        EventHandler.trigger(this._element, Event.OPEN)
+        EventHandler.trigger(this._element, EVENT_OPEN)
 
         if (this._isMobile()) {
             this._addClassName(this._firstBreakpointClassName())
@@ -125,22 +125,37 @@ class Sidebar {
             })
         } else if (breakpoint) {
             this._addClassName(this._getBreakpointClassName(breakpoint))
+
+            if (this._isOverlaid()) {
+                EventHandler.one(this._element, TRANSITION_END, () => {
+                    this._addClickOutListener()
+                })
+            }
         } else {
             this._addClassName(this._firstBreakpointClassName())
+
+            if (this._isOverlaid()) {
+                EventHandler.one(this._element, TRANSITION_END, () => {
+                    this._addClickOutListener()
+                })
+            }
         }
 
         const complete = () => {
             if (this._isVisible() === true) {
                 this._open = true
-                EventHandler.trigger(this._element, Event.OPENED)
+                EventHandler.trigger(this._element, EVENT_OPENED)
             }
         }
 
+        const transitionDuration = getTransitionDurationFromElement(this._element)
+
         EventHandler.one(this._element, TRANSITION_END, complete)
+        emulateTransitionEnd(this._element, transitionDuration)
     }
 
     close(breakpoint) {
-        EventHandler.trigger(this._element, Event.CLOSE)
+        EventHandler.trigger(this._element, EVENT_CLOSE)
 
         if (this._isMobile()) {
             this._element.classList.remove(this._firstBreakpointClassName())
@@ -148,18 +163,27 @@ class Sidebar {
             this._removeClickOutListener()
         } else if (breakpoint) {
             this._element.classList.remove(this._getBreakpointClassName(breakpoint))
+            if (this._isOverlaid()) {
+                this._removeClickOutListener()
+            }
         } else {
             this._element.classList.remove(this._firstBreakpointClassName())
+            if (this._isOverlaid()) {
+                this._removeClickOutListener()
+            }
         }
 
         const complete = () => {
             if (this._isVisible() === false) {
                 this._open = false
-                EventHandler.trigger(this._element, Event.CLOSED)
+                EventHandler.trigger(this._element, EVENT_CLOSED)
             }
         }
 
+        const transitionDuration = getTransitionDurationFromElement(this._element)
+
         EventHandler.one(this._element, TRANSITION_END, complete)
+        emulateTransitionEnd(this._element, transitionDuration)
     }
 
     toggle(breakpoint) {
@@ -172,7 +196,7 @@ class Sidebar {
 
     minimize() {
         if (!this._isMobile()) {
-            this._addClassName(ClassName.SIDEBAR_MINIMIZED)
+            this._addClassName(CLASS_NAME_SIDEBAR_MINIMIZED)
             this._minimize = true
             this._psDestroy()
         }
@@ -180,20 +204,20 @@ class Sidebar {
 
     unfoldable() {
         if (!this._isMobile()) {
-            this._addClassName(ClassName.SIDEBAR_UNFOLDABLE)
+            this._addClassName(CLASS_NAME_SIDEBAR_UNFOLDABLE)
             this._unfoldable = true
         }
     }
 
     reset() {
-        if (this._element.classList.contains(ClassName.SIDEBAR_MINIMIZED)) {
-            this._element.classList.remove(ClassName.SIDEBAR_MINIMIZED)
+        if (this._element.classList.contains(CLASS_NAME_SIDEBAR_MINIMIZED)) {
+            this._element.classList.remove(CLASS_NAME_SIDEBAR_MINIMIZED)
             this._minimize = false
             EventHandler.one(this._element, TRANSITION_END, this._psInit())
         }
 
-        if (this._element.classList.contains(ClassName.SIDEBAR_UNFOLDABLE)) {
-            this._element.classList.remove(ClassName.SIDEBAR_UNFOLDABLE)
+        if (this._element.classList.contains(CLASS_NAME_SIDEBAR_UNFOLDABLE)) {
+            this._element.classList.remove(CLASS_NAME_SIDEBAR_UNFOLDABLE)
             this._unfoldable = false
         }
     }
@@ -220,16 +244,39 @@ class Sidebar {
         return Boolean(window.getComputedStyle(this._element, null).getPropertyValue('--is-mobile'))
     }
 
+    _isIOS() {
+        const iOSDevices = [
+            'iPad Simulator',
+            'iPhone Simulator',
+            'iPod Simulator',
+            'iPad',
+            'iPhone',
+            'iPod'
+        ]
+
+        const platform = Boolean(navigator.platform)
+
+        if (platform) {
+            while (iOSDevices.length) {
+                if (navigator.platform === iOSDevices.pop()) {
+                    return true
+                }
+            }
+        }
+
+        return false
+    }
+
     _isMinimized() {
-        return this._element.classList.contains(ClassName.SIDEBAR_MINIMIZED)
+        return this._element.classList.contains(CLASS_NAME_SIDEBAR_MINIMIZED)
     }
 
     _isOverlaid() {
-        return this._element.classList.contains(ClassName.SIDEBAR_OVERLAID)
+        return this._element.classList.contains(CLASS_NAME_SIDEBAR_OVERLAID)
     }
 
     _isUnfoldable() {
-        return this._element.classList.contains(ClassName.SIDEBAR_UNFOLDABLE)
+        return this._element.classList.contains(CLASS_NAME_SIDEBAR_UNFOLDABLE)
     }
 
     _isVisible() {
@@ -265,16 +312,16 @@ class Sidebar {
     _showBackdrop() {
         if (!this._backdrop) {
             this._backdrop = document.createElement('div')
-            this._backdrop.className = ClassName.BACKDROP
-            this._backdrop.classList.add(ClassName.FADE)
+            this._backdrop.className = CLASS_NAME_BACKDROP
+            this._backdrop.classList.add(CLASS_NAME_FADE)
             document.body.appendChild(this._backdrop)
             reflow(this._backdrop)
-            this._backdrop.classList.add(ClassName.SHOW)
+            this._backdrop.classList.add(CLASS_NAME_SHOW)
         }
     }
 
     _clickOutListener(event, sidebar) {
-        if (event.target.closest(Selector.SIDEBAR) === null) { // or use:
+        if (event.target.closest(SELECTOR_SIDEBAR) === null) { // or use:
             event.preventDefault()
             event.stopPropagation()
             sidebar.close()
@@ -282,13 +329,13 @@ class Sidebar {
     }
 
     _addClickOutListener() {
-        EventHandler.on(document, Event.CLICK_DATA_API, event => {
+        EventHandler.on(document, EVENT_CLICK_DATA_API, event => {
             this._clickOutListener(event, this)
         })
     }
 
     _removeClickOutListener() {
-        EventHandler.off(document, Event.CLICK_DATA_API)
+        EventHandler.off(document, EVENT_CLICK_DATA_API)
     }
 
     // Sidebar navigation
@@ -299,6 +346,10 @@ class Sidebar {
         do {
             if (element.nodeType === 3) {
                 continue // text node
+            }
+
+            if (element.nodeType === 8) {
+                continue // comment node
             }
 
             if (!filter || filter(element)) {
@@ -313,37 +364,41 @@ class Sidebar {
 
     _toggleDropdown(event, sidebar) {
         let toggler = event.target
-        if (!toggler.classList.contains(ClassName.NAV_DROPDOWN_TOGGLE)) {
-            toggler = toggler.closest(Selector.NAV_DROPDOWN_TOGGLE)
+        if (!toggler.classList.contains(CLASS_NAME_NAV_DROPDOWN_TOGGLE)) {
+            toggler = toggler.closest(SELECTOR_NAV_DROPDOWN_TOGGLE)
         }
 
-        const dataAttributes = toggler.closest(Selector.NAVIGATION_CONTAINER).dataset
+        const dataAttributes = toggler.closest(SELECTOR_NAVIGATION_CONTAINER).dataset
 
         if (typeof dataAttributes.dropdownAccordion !== 'undefined') {
             Default.dropdownAccordion = JSON.parse(dataAttributes.dropdownAccordion)
         }
 
+        // TODO: find better solution
         if (Default.dropdownAccordion === true) {
-            this._getAllSiblings(toggler.parentElement).forEach(element => {
+            this._getAllSiblings(toggler.parentElement, element => Boolean(element.classList.contains(CLASS_NAME_NAV_DROPDOWN))).forEach(element => {
                 if (element !== toggler.parentNode) {
-                    if (element.classList.contains(ClassName.NAV_DROPDOWN)) {
-                        element.classList.remove(ClassName.SHOW)
+                    if (element.classList.contains(CLASS_NAME_NAV_DROPDOWN)) {
+                        element.classList.remove(CLASS_NAME_SHOW)
                     }
                 }
             })
         }
 
-        toggler.parentNode.classList.toggle(ClassName.SHOW)
+        toggler.parentNode.classList.toggle(CLASS_NAME_SHOW)
+            // TODO: Set the toggler's position near to cursor after the click.
 
+        // TODO: add transition end
         sidebar._psUpdate()
     }
 
     // PerfectScrollbar
 
     _psInit() {
-        if (this._element.querySelector(Selector.NAVIGATION_CONTAINER)) {
-            this._ps = new PerfectScrollbar(this._element.querySelector(Selector.NAVIGATION_CONTAINER), {
-                suppressScrollX: true
+        if (this._element.querySelector(SELECTOR_NAVIGATION_CONTAINER) && !this._isIOS()) {
+            this._ps = new PerfectScrollbar(this._element.querySelector(SELECTOR_NAVIGATION_CONTAINER), {
+                suppressScrollX: true,
+                wheelPropagation: false
             })
         }
     }
@@ -353,12 +408,6 @@ class Sidebar {
             this._ps.update()
         }
     }
-
-    _psScrollActive() {
-        const activeLink = document.querySelector(ClassName.ACTIVE)
-        activeLink.scrollTop = 0;
-    }
-
 
     _psDestroy() {
         if (this._ps) {
@@ -388,7 +437,7 @@ class Sidebar {
 
     _setActiveLink() {
         // eslint-disable-next-line unicorn/prefer-spread
-        Array.from(this._element.querySelectorAll(Selector.NAV_LINK)).forEach(element => {
+        Array.from(this._element.querySelectorAll(SELECTOR_NAV_LINK)).forEach(element => {
             let currentUrl
 
             const urlHasParams = /\\?.*=/
@@ -407,16 +456,28 @@ class Sidebar {
                 currentUrl = currentUrl.slice(0, -1)
             }
 
-            if (element.href === currentUrl) {
-                element.classList.add(ClassName.ACTIVE)
-                    // eslint-disable-next-line unicorn/prefer-spread
-                Array.from(this._getParents(element, Selector.NAV_DROPDOWN)).forEach(element => {
-                    element.classList.add(ClassName.SHOW)
-                })
+            const dataAttributes = element.closest(SELECTOR_NAVIGATION_CONTAINER).dataset
 
+            if (typeof dataAttributes.activeLinksExact !== 'undefined') {
+                Default.activeLinksExact = JSON.parse(dataAttributes.activeLinksExact)
+            }
+
+            if (Default.activeLinksExact && element.href === currentUrl) {
+                element.classList.add(CLASS_NAME_ACTIVE)
+                    // eslint-disable-next-line unicorn/prefer-spread
+                Array.from(this._getParents(element, SELECTOR_NAV_DROPDOWN)).forEach(element => {
+                    element.classList.add(CLASS_NAME_SHOW)
+                })
+            }
+
+            if (!Default.activeLinksExact && element.href.startsWith(currentUrl)) {
+                element.classList.add(CLASS_NAME_ACTIVE)
+                    // eslint-disable-next-line unicorn/prefer-spread
+                Array.from(this._getParents(element, SELECTOR_NAV_DROPDOWN)).forEach(element => {
+                    element.classList.add(CLASS_NAME_SHOW)
+                })
             }
         })
-
     }
 
     _addEventListeners() {
@@ -428,17 +489,17 @@ class Sidebar {
             this._addClickOutListener()
         }
 
-        EventHandler.on(this._element, Event.CLASS_TOGGLE, event => {
-            if (event.detail.className === ClassName.SIDEBAR_MINIMIZED) {
-                if (this._element.classList.contains(ClassName.SIDEBAR_MINIMIZED)) {
+        EventHandler.on(this._element, EVENT_CLASS_TOGGLE, event => {
+            if (event.detail.className === CLASS_NAME_SIDEBAR_MINIMIZED) {
+                if (this._element.classList.contains(CLASS_NAME_SIDEBAR_MINIMIZED)) {
                     this.minimize()
                 } else {
                     this.reset()
                 }
             }
 
-            if (event.detail.className === ClassName.SIDEBAR_UNFOLDABLE) {
-                if (this._element.classList.contains(ClassName.SIDEBAR_UNFOLDABLE)) {
+            if (event.detail.className === CLASS_NAME_SIDEBAR_UNFOLDABLE) {
+                if (this._element.classList.contains(CLASS_NAME_SIDEBAR_UNFOLDABLE)) {
                     this.unfoldable()
                 } else {
                     this.reset()
@@ -457,12 +518,12 @@ class Sidebar {
             }
         })
 
-        EventHandler.on(this._element, Event.CLICK_DATA_API, Selector.NAV_DROPDOWN_TOGGLE, event => {
+        EventHandler.on(this._element, EVENT_CLICK_DATA_API, SELECTOR_NAV_DROPDOWN_TOGGLE, event => {
             event.preventDefault()
             this._toggleDropdown(event, this)
         })
 
-        EventHandler.on(this._element, Event.CLICK_DATA_API, Selector.NAV_LINK, () => {
+        EventHandler.on(this._element, EVENT_CLICK_DATA_API, SELECTOR_NAV_LINK, () => {
             if (this._isMobile()) {
                 this.close()
             }
@@ -505,9 +566,9 @@ class Sidebar {
  * ------------------------------------------------------------------------
  */
 
-EventHandler.on(window, Event.LOAD_DATA_API, () => {
+EventHandler.on(window, EVENT_LOAD_DATA_API, () => {
     // eslint-disable-next-line unicorn/prefer-spread
-    Array.from(document.querySelectorAll(Selector.SIDEBAR)).forEach(element => {
+    Array.from(document.querySelectorAll(SELECTOR_SIDEBAR)).forEach(element => {
         Sidebar._sidebarInterface(element)
     })
 })
