@@ -74,7 +74,7 @@
     "eslint-plugin-unicorn": "^15.0.1",
     "find-unused-sass-variables": "^1.0.5",
     "foreach-cli": "^1.8.1",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "nodemon": "^2.0.2",
     "npm-run-all": "^4.1.5",
     "perfect-scrollbar": "^1.5.0",
