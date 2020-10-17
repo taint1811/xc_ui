@@ -130,7 +130,7 @@
 
   var NAME = 'sidebar';
   var VERSION = '1.0.0';
-  var DATA_KEY = 'xcodi.sidebar';
+  var DATA_KEY = 'xcodiui.sidebar';
   var EVENT_KEY = "." + DATA_KEY;
   var DATA_API_KEY = '.data-api';
   var Default = {

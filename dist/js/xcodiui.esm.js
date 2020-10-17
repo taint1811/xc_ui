@@ -765,7 +765,7 @@ var EventHandler = {
 
 var NAME = 'asyncLoad';
 var VERSION = '1.0.0';
-var DATA_KEY = 'xcodi.asyncLoad';
+var DATA_KEY = 'xcodiui.asyncLoad';
 var EVENT_KEY = "." + DATA_KEY;
 var DATA_API_KEY = '.data-api';
 var ClassName = {
@@ -1105,7 +1105,7 @@ var SelectorEngine = {
 
 var NAME$1 = 'alert';
 var VERSION$1 = '1.0.0';
-var DATA_KEY$1 = 'xcodi.alert';
+var DATA_KEY$1 = 'xcodiui.alert';
 var EVENT_KEY$1 = "." + DATA_KEY$1;
 var DATA_API_KEY$1 = '.data-api';
 var Selector$1 = {
@@ -1277,7 +1277,7 @@ if ($$2) {
 
 var NAME$2 = 'button';
 var VERSION$2 = '1.0.0';
-var DATA_KEY$2 = 'xcodi.button';
+var DATA_KEY$2 = 'xcodiui.button';
 var EVENT_KEY$2 = "." + DATA_KEY$2;
 var DATA_API_KEY$2 = '.data-api';
 var ClassName$2 = {
@@ -1534,7 +1534,7 @@ var Manipulator = {
 
 var NAME$3 = 'carousel';
 var VERSION$3 = '1.0.0';
-var DATA_KEY$3 = 'xcodi.carousel';
+var DATA_KEY$3 = 'xcodiui.carousel';
 var EVENT_KEY$3 = "." + DATA_KEY$3;
 var DATA_API_KEY$3 = '.data-api';
 var ARROW_LEFT_KEYCODE = 37; // KeyboardEvent.which value for left arrow key
@@ -2145,7 +2145,7 @@ if ($$4) {
 
 var NAME$4 = 'class-toggler';
 var VERSION$4 = '1.0.0';
-var DATA_KEY$4 = 'xcodi.class-toggler';
+var DATA_KEY$4 = 'xcodiui.class-toggler';
 var EVENT_KEY$4 = "." + DATA_KEY$4;
 var DATA_API_KEY$4 = '.data-api';
 var Default$2 = {
@@ -2427,7 +2427,7 @@ if ($$5) {
 
 var NAME$5 = 'collapse';
 var VERSION$5 = '1.0.0';
-var DATA_KEY$5 = 'xcodi.collapse';
+var DATA_KEY$5 = 'xcodiui.collapse';
 var EVENT_KEY$5 = "." + DATA_KEY$5;
 var DATA_API_KEY$5 = '.data-api';
 var Default$3 = {
@@ -2842,7 +2842,7 @@ if ($$6) {
 
 var NAME$6 = 'dropdown';
 var VERSION$6 = '1.0.0';
-var DATA_KEY$6 = 'xcodi.dropdown';
+var DATA_KEY$6 = 'xcodiui.dropdown';
 var EVENT_KEY$6 = "." + DATA_KEY$6;
 var DATA_API_KEY$6 = '.data-api';
 var ESCAPE_KEYCODE = 27; // KeyboardEvent.which value for Escape (Esc) key
@@ -3376,7 +3376,7 @@ if ($$7) {
 
 var NAME$7 = 'modal';
 var VERSION$7 = '1.0.0';
-var DATA_KEY$7 = 'xcodi.modal';
+var DATA_KEY$7 = 'xcodiui.modal';
 var EVENT_KEY$7 = "." + DATA_KEY$7;
 var DATA_API_KEY$7 = '.data-api';
 var ESCAPE_KEYCODE$1 = 27; // KeyboardEvent.which value for Escape (Esc) key
@@ -4112,7 +4112,7 @@ function sanitizeHtml(unsafeHtml, whiteList, sanitizeFn) {
 
 var NAME$8 = 'tooltip';
 var VERSION$8 = '1.0.0';
-var DATA_KEY$8 = 'xcodi.tooltip';
+var DATA_KEY$8 = 'xcodiui.tooltip';
 var EVENT_KEY$8 = "." + DATA_KEY$8;
 var CLASS_PREFIX = 'bs-tooltip';
 var BSCLS_PREFIX_REGEX = new RegExp("(^|\\s)" + CLASS_PREFIX + "\\S+", 'g');
@@ -4875,7 +4875,7 @@ if ($$9) {
 
 var NAME$9 = 'popover';
 var VERSION$9 = '1.0.0';
-var DATA_KEY$9 = 'xcodi.popover';
+var DATA_KEY$9 = 'xcodiui.popover';
 var EVENT_KEY$9 = "." + DATA_KEY$9;
 var CLASS_PREFIX$1 = 'bs-popover';
 var BSCLS_PREFIX_REGEX$1 = new RegExp("(^|\\s)" + CLASS_PREFIX$1 + "\\S+", 'g');
@@ -5068,7 +5068,7 @@ if ($$a) {
 
 var NAME$a = 'scrollspy';
 var VERSION$a = '1.0.0';
-var DATA_KEY$a = 'xcodi.scrollspy';
+var DATA_KEY$a = 'xcodiui.scrollspy';
 var EVENT_KEY$a = "." + DATA_KEY$a;
 var DATA_API_KEY$8 = '.data-api';
 var Default$8 = {
@@ -5381,7 +5381,7 @@ if ($$b) {
 
 var NAME$b = 'sidebar';
 var VERSION$b = '1.0.0';
-var DATA_KEY$b = 'xcodi.sidebar';
+var DATA_KEY$b = 'xcodiui.sidebar';
 var EVENT_KEY$b = "." + DATA_KEY$b;
 var DATA_API_KEY$9 = '.data-api';
 var Default$9 = {
@@ -5918,7 +5918,7 @@ if ($$c) {
 
 var NAME$c = 'tab';
 var VERSION$c = '1.0.0';
-var DATA_KEY$c = 'xcodi.tab';
+var DATA_KEY$c = 'xcodiui.tab';
 var EVENT_KEY$c = "." + DATA_KEY$c;
 var DATA_API_KEY$a = '.data-api';
 var Event$d = {
@@ -6150,7 +6150,7 @@ if ($$d) {
 
 var NAME$d = 'toast';
 var VERSION$d = '1.0.0';
-var DATA_KEY$d = 'xcodi.toast';
+var DATA_KEY$d = 'xcodiui.toast';
 var EVENT_KEY$d = "." + DATA_KEY$d;
 var Event$e = {
   CLICK_DISMISS: "click.dismiss" + EVENT_KEY$d,

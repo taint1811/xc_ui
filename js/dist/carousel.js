@@ -216,7 +216,7 @@
 
   var NAME = 'carousel';
   var VERSION = '1.0.0';
-  var DATA_KEY = 'xcodi.carousel';
+  var DATA_KEY = 'xcodiui.carousel';
   var EVENT_KEY = "." + DATA_KEY;
   var DATA_API_KEY = '.data-api';
   var ARROW_LEFT_KEYCODE = 37; // KeyboardEvent.which value for left arrow key

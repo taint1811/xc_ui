@@ -55,7 +55,7 @@
 
   var NAME = 'button';
   var VERSION = '1.0.0';
-  var DATA_KEY = 'xcodi.button';
+  var DATA_KEY = 'xcodiui.button';
   var EVENT_KEY = "." + DATA_KEY;
   var DATA_API_KEY = '.data-api';
   var ClassName = {

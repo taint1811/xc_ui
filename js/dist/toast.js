@@ -177,7 +177,7 @@
 
   var NAME = 'toast';
   var VERSION = '1.0.0';
-  var DATA_KEY = 'xcodi.toast';
+  var DATA_KEY = 'xcodiui.toast';
   var EVENT_KEY = "." + DATA_KEY;
   var Event = {
     CLICK_DISMISS: "click.dismiss" + EVENT_KEY,

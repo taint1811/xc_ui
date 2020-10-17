@@ -345,7 +345,7 @@
 
   var NAME = 'tooltip';
   var VERSION = '1.0.0';
-  var DATA_KEY = 'xcodi.tooltip';
+  var DATA_KEY = 'xcodiui.tooltip';
   var EVENT_KEY = "." + DATA_KEY;
   var CLASS_PREFIX = 'bs-tooltip';
   var BSCLS_PREFIX_REGEX = new RegExp("(^|\\s)" + CLASS_PREFIX + "\\S+", 'g');
