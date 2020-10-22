@@ -30,12 +30,12 @@ const DATA_API_KEY = '.data-api'
 const Default = {
     activeLinksExact: true,
     breakpoints: {
-        xs: 'c-sidebar-show',
-        sm: 'c-sidebar-sm-show',
-        md: 'c-sidebar-md-show',
-        lg: 'c-sidebar-lg-show',
-        xl: 'c-sidebar-xl-show',
-        xxl: 'c-sidebar-xxl-show'
+        xs: 'xc-sidebar-show',
+        sm: 'xc-sidebar-sm-show',
+        md: 'xc-sidebar-md-show',
+        lg: 'xc-sidebar-lg-show',
+        xl: 'xc-sidebar-xl-show',
+        xxl: 'xc-sidebar-xxl-show'
     },
     dropdownAccordion: true
 }
@@ -46,15 +46,15 @@ const DefaultType = {
     dropdownAccordion: '(string|boolean)'
 }
 
-const CLASS_NAME_ACTIVE = 'c-active'
-const CLASS_NAME_BACKDROP = 'c-sidebar-backdrop'
-const CLASS_NAME_FADE = 'c-fade'
-const CLASS_NAME_NAV_DROPDOWN = 'c-sidebar-nav-dropdown'
-const CLASS_NAME_NAV_DROPDOWN_TOGGLE = 'c-sidebar-nav-dropdown-toggle'
-const CLASS_NAME_SHOW = 'c-show'
-const CLASS_NAME_SIDEBAR_MINIMIZED = 'c-sidebar-minimized'
-const CLASS_NAME_SIDEBAR_OVERLAID = 'c-sidebar-overlaid'
-const CLASS_NAME_SIDEBAR_UNFOLDABLE = 'c-sidebar-unfoldable'
+const CLASS_NAME_ACTIVE = 'xc-active'
+const CLASS_NAME_BACKDROP = 'xc-sidebar-backdrop'
+const CLASS_NAME_FADE = 'xc-fade'
+const CLASS_NAME_NAV_DROPDOWN = 'xc-sidebar-nav-dropdown'
+const CLASS_NAME_NAV_DROPDOWN_TOGGLE = 'xc-sidebar-nav-dropdown-toggle'
+const CLASS_NAME_SHOW = 'xc-show'
+const CLASS_NAME_SIDEBAR_MINIMIZED = 'xc-sidebar-minimized'
+const CLASS_NAME_SIDEBAR_OVERLAID = 'xc-sidebar-overlaid'
+const CLASS_NAME_SIDEBAR_UNFOLDABLE = 'xc-sidebar-unfoldable'
 
 const EVENT_CLASS_TOGGLE = 'classtoggle'
 const EVENT_CLICK_DATA_API = `click${EVENT_KEY}${DATA_API_KEY}`
@@ -64,11 +64,11 @@ const EVENT_LOAD_DATA_API = `load${EVENT_KEY}${DATA_API_KEY}`
 const EVENT_OPEN = `open${EVENT_KEY}`
 const EVENT_OPENED = `opened${EVENT_KEY}`
 
-const SELECTOR_NAV_DROPDOWN_TOGGLE = '.c-sidebar-nav-dropdown-toggle'
-const SELECTOR_NAV_DROPDOWN = '.c-sidebar-nav-dropdown'
-const SELECTOR_NAV_LINK = '.c-sidebar-nav-link'
-const SELECTOR_NAVIGATION_CONTAINER = '.c-sidebar-nav'
-const SELECTOR_SIDEBAR = '.c-sidebar'
+const SELECTOR_NAV_DROPDOWN_TOGGLE = '.xc-sidebar-nav-dropdown-toggle'
+const SELECTOR_NAV_DROPDOWN = '.xc-sidebar-nav-dropdown'
+const SELECTOR_NAV_LINK = '.xc-sidebar-nav-link'
+const SELECTOR_NAVIGATION_CONTAINER = '.xc-sidebar-nav'
+const SELECTOR_SIDEBAR = '.xc-sidebar'
 
 /**
  * ------------------------------------------------------------------------

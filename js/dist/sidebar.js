@@ -184,12 +184,12 @@
   var Default = {
     activeLinksExact: true,
     breakpoints: {
-      xs: 'c-sidebar-show',
-      sm: 'c-sidebar-sm-show',
-      md: 'c-sidebar-md-show',
-      lg: 'c-sidebar-lg-show',
-      xl: 'c-sidebar-xl-show',
-      xxl: 'c-sidebar-xxl-show'
+      xs: 'xc-sidebar-show',
+      sm: 'xc-sidebar-sm-show',
+      md: 'xc-sidebar-md-show',
+      lg: 'xc-sidebar-lg-show',
+      xl: 'xc-sidebar-xl-show',
+      xxl: 'xc-sidebar-xxl-show'
     },
     dropdownAccordion: true
   };
@@ -198,15 +198,15 @@
     breakpoints: 'object',
     dropdownAccordion: '(string|boolean)'
   };
-  var CLASS_NAME_ACTIVE = 'c-active';
-  var CLASS_NAME_BACKDROP = 'c-sidebar-backdrop';
-  var CLASS_NAME_FADE = 'c-fade';
-  var CLASS_NAME_NAV_DROPDOWN = 'c-sidebar-nav-dropdown';
-  var CLASS_NAME_NAV_DROPDOWN_TOGGLE = 'c-sidebar-nav-dropdown-toggle';
-  var CLASS_NAME_SHOW = 'c-show';
-  var CLASS_NAME_SIDEBAR_MINIMIZED = 'c-sidebar-minimized';
-  var CLASS_NAME_SIDEBAR_OVERLAID = 'c-sidebar-overlaid';
-  var CLASS_NAME_SIDEBAR_UNFOLDABLE = 'c-sidebar-unfoldable';
+  var CLASS_NAME_ACTIVE = 'xc-active';
+  var CLASS_NAME_BACKDROP = 'xc-sidebar-backdrop';
+  var CLASS_NAME_FADE = 'xc-fade';
+  var CLASS_NAME_NAV_DROPDOWN = 'xc-sidebar-nav-dropdown';
+  var CLASS_NAME_NAV_DROPDOWN_TOGGLE = 'xc-sidebar-nav-dropdown-toggle';
+  var CLASS_NAME_SHOW = 'xc-show';
+  var CLASS_NAME_SIDEBAR_MINIMIZED = 'xc-sidebar-minimized';
+  var CLASS_NAME_SIDEBAR_OVERLAID = 'xc-sidebar-overlaid';
+  var CLASS_NAME_SIDEBAR_UNFOLDABLE = 'xc-sidebar-unfoldable';
   var EVENT_CLASS_TOGGLE = 'classtoggle';
   var EVENT_CLICK_DATA_API = "click" + EVENT_KEY + DATA_API_KEY;
   var EVENT_CLOSE = "close" + EVENT_KEY;
@@ -214,11 +214,11 @@
   var EVENT_LOAD_DATA_API = "load" + EVENT_KEY + DATA_API_KEY;
   var EVENT_OPEN = "open" + EVENT_KEY;
   var EVENT_OPENED = "opened" + EVENT_KEY;
-  var SELECTOR_NAV_DROPDOWN_TOGGLE = '.c-sidebar-nav-dropdown-toggle';
-  var SELECTOR_NAV_DROPDOWN = '.c-sidebar-nav-dropdown';
-  var SELECTOR_NAV_LINK = '.c-sidebar-nav-link';
-  var SELECTOR_NAVIGATION_CONTAINER = '.c-sidebar-nav';
-  var SELECTOR_SIDEBAR = '.c-sidebar';
+  var SELECTOR_NAV_DROPDOWN_TOGGLE = '.xc-sidebar-nav-dropdown-toggle';
+  var SELECTOR_NAV_DROPDOWN = '.xc-sidebar-nav-dropdown';
+  var SELECTOR_NAV_LINK = '.xc-sidebar-nav-link';
+  var SELECTOR_NAVIGATION_CONTAINER = '.xc-sidebar-nav';
+  var SELECTOR_SIDEBAR = '.xc-sidebar';
   /**
    * ------------------------------------------------------------------------
    * Class Definition
