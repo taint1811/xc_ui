@@ -329,9 +329,6 @@
   };
 
   /* istanbul ignore file */
-  var _Element$prototype = Element.prototype,
-      matches = _Element$prototype.matches,
-      closest = _Element$prototype.closest;
   var find = Element.prototype.querySelectorAll;
   var findOne = Element.prototype.querySelector;
 
@@ -391,26 +388,6 @@
     element.dispatchEvent(e);
     return e.defaultPrevented;
   }();
-
-  if (!matches) {
-    matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
-  }
-
-  if (!closest) {
-    closest = function closest(selector) {
-      var element = this;
-
-      do {
-        if (matches.call(element, selector)) {
-          return element;
-        }
-
-        element = element.parentElement || element.parentNode;
-      } while (element !== null && element.nodeType === 1);
-
-      return null;
-    };
-  }
 
   var scopeSelectorRegex = /:scope\b/;
 
@@ -1030,7 +1007,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap (v4.3.1): dom/selector-engine.js
+   * Bootstrap (v5.0.0-alpha1): dom/selector-engine.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
    * --------------------------------------------------------------------------
    */
@@ -1042,15 +1019,17 @@
 
   var NODE_TEXT = 3;
   var SelectorEngine = {
-    matches: function matches$1(element, selector) {
-      return matches.call(element, selector);
+    matches: function matches(element, selector) {
+      return element.matches(selector);
     },
     find: function find$1(selector, element) {
+      var _ref;
+
       if (element === void 0) {
         element = document.documentElement;
       }
 
-      return find.call(element, selector);
+      return (_ref = []).concat.apply(_ref, find.call(element, selector));
     },
     findOne: function findOne$1(selector, element) {
       if (element === void 0) {
@@ -1060,11 +1039,12 @@
       return findOne.call(element, selector);
     },
     children: function children(element, selector) {
-      var _this = this;
+      var _ref2;
 
-      var children = makeArray(element.children);
+      var children = (_ref2 = []).concat.apply(_ref2, element.children);
+
       return children.filter(function (child) {
-        return _this.matches(child, selector);
+        return child.matches(selector);
       });
     },
     parents: function parents(element, selector) {
@@ -1081,22 +1061,31 @@
 
       return parents;
     },
-    closest: function closest$1(element, selector) {
-      return closest.call(element, selector);
-    },
     prev: function prev(element, selector) {
-      var siblings = [];
-      var previous = element.previousSibling;
+      var previous = element.previousElementSibling;
 
-      while (previous && previous.nodeType === Node.ELEMENT_NODE && previous.nodeType !== NODE_TEXT) {
-        if (this.matches(previous, selector)) {
-          siblings.push(previous);
+      while (previous) {
+        if (previous.matches(selector)) {
+          return [previous];
         }
 
-        previous = previous.previousSibling;
+        previous = previous.previousElementSibling;
       }
 
-      return siblings;
+      return [];
+    },
+    next: function next(element, selector) {
+      var next = element.nextElementSibling;
+
+      while (next) {
+        if (this.matches(next, selector)) {
+          return [next];
+        }
+
+        next = next.nextElementSibling;
+      }
+
+      return [];
     }
   };
 
@@ -6944,7 +6933,7 @@
       Element.prototype.mozMatchesSelector ||
       Element.prototype.msMatchesSelector);
 
-  function matches$1(element, query) {
+  function matches(element, query) {
     if (!elMatches) {
       throw new Error('No element matching method supported');
     }
@@ -6963,7 +6952,7 @@
   }
 
   function queryChildren(element, selector) {
-    return Array.prototype.filter.call(element.children, function (child) { return matches$1(child, selector); }
+    return Array.prototype.filter.call(element.children, function (child) { return matches(child, selector); }
     );
   }
 
@@ -7195,10 +7184,10 @@
 
   function isEditable(el) {
     return (
-      matches$1(el, 'input,[contenteditable]') ||
-      matches$1(el, 'select,[contenteditable]') ||
-      matches$1(el, 'textarea,[contenteditable]') ||
-      matches$1(el, 'button,[contenteditable]')
+      matches(el, 'input,[contenteditable]') ||
+      matches(el, 'select,[contenteditable]') ||
+      matches(el, 'textarea,[contenteditable]') ||
+      matches(el, 'button,[contenteditable]')
     );
   }
 
@@ -7513,8 +7502,8 @@
   function keyboard(i) {
     var element = i.element;
 
-    var elementHovered = function () { return matches$1(element, ':hover'); };
-    var scrollbarFocused = function () { return matches$1(i.scrollbarX, ':focus') || matches$1(i.scrollbarY, ':focus'); };
+    var elementHovered = function () { return matches(element, ':hover'); };
+    var scrollbarFocused = function () { return matches(i.scrollbarX, ':focus') || matches(i.scrollbarY, ':focus'); };
 
     function shouldPreventDefault(deltaX, deltaY) {
       var scrollTop = Math.floor(element.scrollTop);
