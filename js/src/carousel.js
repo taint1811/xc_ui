@@ -1,5 +1,8 @@
 /**
  * --------------------------------------------------------------------------
+ *  @author: Tai Nguyen (nguyentantai1811@gmail.com)
+ *  @copyright © 2020 - Tai Nguyen Tan.
+ *  @license  Premium.
  *
  * This component is a modified version of the Bootstrap's carousel.js
  * Bootstrap (v5.0.0): carousel.js
@@ -30,7 +33,7 @@ import SelectorEngine from './dom/selector-engine'
  */
 
 const NAME = 'carousel'
-const VERSION = '1.0.1'
+const VERSION = '1.0.2'
 const DATA_KEY = 'xcodiui.carousel'
 const EVENT_KEY = `.${DATA_KEY}`
 const DATA_API_KEY = '.data-api'

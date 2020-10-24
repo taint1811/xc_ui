@@ -1,4 +1,8 @@
 /**
+ * --------------------------------------------------------------------------
+ *  @author: Tai Nguyen (nguyentantai1811@gmail.com)
+ *  @copyright © 2020 - Tai Nguyen Tan.
+ *  @license  Premium.
  *
  * This component is a modified version of the Bootstrap's scrollspy.js
  * Bootstrap (v5.0.0): scrollspy.js
@@ -25,7 +29,7 @@ import SelectorEngine from './dom/selector-engine'
  */
 
 const NAME = 'scrollspy'
-const VERSION = '1.0.1'
+const VERSION = '1.0.2'
 const DATA_KEY = 'xcodiui.scrollspy'
 const EVENT_KEY = `.${DATA_KEY}`
 const DATA_API_KEY = '.data-api'

@@ -1,5 +1,8 @@
 /**
  * --------------------------------------------------------------------------
+ *  @author: Tai Nguyen (nguyentantai1811@gmail.com)
+ *  @copyright © 2020 - Tai Nguyen Tan.
+ *  @license  Premium.
  *
  * This component is a modified version of the Bootstrap's dropdown.js
  * Bootstrap (v5.0.0): dropdown.js
@@ -28,7 +31,7 @@ import SelectorEngine from './dom/selector-engine'
  */
 
 const NAME = 'dropdown'
-const VERSION = '1.0.1'
+const VERSION = '1.0.2'
 const DATA_KEY = 'xcodiui.dropdown'
 const EVENT_KEY = `.${DATA_KEY}`
 const DATA_API_KEY = '.data-api'
@@ -163,7 +166,7 @@ class Dropdown {
         // Disable totally Popper.js for Dropdown in Navbar
         if (!this._inNavbar && !this._inHeader) {
             if (typeof createPopper === 'undefined') {
-                throw new TypeError('XcodiuI dropdowns require Popper.js (https://popper.js.org)')
+                throw new TypeError('XcodiUI\'s dropdowns require Popper.js (https://popper.js.org)')
             }
 
             let referenceElement = this._element

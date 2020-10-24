@@ -81,7 +81,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap (v4.3.1): util/index.js
+   * Bootstrap (v5.0.0-alpha1): util/index.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
    * --------------------------------------------------------------------------
    */
@@ -89,6 +89,10 @@
   var TRANSITION_END = 'transitionend'; // Shoutout AngusCroll (https://goo.gl/pxwQGp)
 
   var toType = function toType(obj) {
+    if (obj === null || obj === undefined) {
+      return "" + obj;
+    }
+
     return {}.toString.call(obj).match(/\s([a-z]+)/i)[1].toLowerCase();
   };
 
@@ -116,9 +120,7 @@
   };
 
   var triggerTransitionEnd = function triggerTransitionEnd(element) {
-    var evt = document.createEvent('HTMLEvents');
-    evt.initEvent(TRANSITION_END, true, true);
-    element.dispatchEvent(evt);
+    element.dispatchEvent(new Event(TRANSITION_END));
   };
 
   var isElement = function isElement(obj) {
@@ -177,7 +179,7 @@
    */
 
   var NAME = 'sidebar';
-  var VERSION = '1.0.1';
+  var VERSION = '1.0.2';
   var DATA_KEY = 'xcodiui.sidebar';
   var EVENT_KEY = "." + DATA_KEY;
   var DATA_API_KEY = '.data-api';
@@ -228,7 +230,7 @@
   var Sidebar = /*#__PURE__*/function () {
     function Sidebar(element, config) {
       if (typeof PerfectScrollbar === 'undefined') {
-        throw new TypeError('XcodiUI sidebar require Perfect Scrollbar');
+        throw new TypeError('XcodiUI\'s sidebar require Perfect Scrollbar');
       }
 
       this._element = element;

@@ -1,5 +1,8 @@
 /**
  * --------------------------------------------------------------------------
+ *  @author: Tai Nguyen (nguyentantai1811@gmail.com)
+ *  @copyright © 2020 - Tai Nguyen Tan.
+ *  @license  Premium.
  *
  * This component is a modified version of the Bootstrap's toast.js
  * Bootstrap (v5.0.0): toast.js
@@ -26,7 +29,7 @@ import Manipulator from './dom/manipulator'
  */
 
 const NAME = 'toast'
-const VERSION = '1.0.1'
+const VERSION = '1.0.2'
 const DATA_KEY = 'xcodiui.toast'
 const EVENT_KEY = `.${DATA_KEY}`
 

@@ -1,5 +1,9 @@
 /**
  * --------------------------------------------------------------------------
+ *  @author: Tai Nguyen (nguyentantai1811@gmail.com)
+ *  @copyright © 2020 - Tai Nguyen Tan.
+ *  @license  Premium.
+ * --------------------------------------------------------------------------
  */
 
 import {
@@ -22,7 +26,7 @@ import PerfectScrollbar from 'perfect-scrollbar'
  */
 
 const NAME = 'sidebar'
-const VERSION = '1.0.1'
+const VERSION = '1.0.2'
 const DATA_KEY = 'xcodiui.sidebar'
 const EVENT_KEY = `.${DATA_KEY}`
 const DATA_API_KEY = '.data-api'
@@ -79,7 +83,7 @@ const SELECTOR_SIDEBAR = '.xc-sidebar'
 class Sidebar {
     constructor(element, config) {
         if (typeof PerfectScrollbar === 'undefined') {
-            throw new TypeError('XcodiUI sidebar require Perfect Scrollbar')
+            throw new TypeError('XcodiUI\'s sidebar require Perfect Scrollbar')
         }
 
         this._element = element

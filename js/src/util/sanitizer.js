@@ -1,11 +1,9 @@
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.3.1): util/sanitizer.js
+ * Bootstrap (v5.0.0-alpha1): util/sanitizer.js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
-
-import { makeArray } from './index'
 
 const uriAttrs = [
   'background',
@@ -48,7 +46,7 @@ const allowedAttribute = (attr, allowedAttributeList) => {
   const regExp = allowedAttributeList.filter(attrRegex => attrRegex instanceof RegExp)
 
   // Check if a regular expression validates the attribute.
-  for (let i = 0, l = regExp.length; i < l; i++) {
+  for (let i = 0, len = regExp.length; i < len; i++) {
     if (attrName.match(regExp[i])) {
       return true
     }
@@ -76,7 +74,7 @@ export const DefaultWhitelist = {
   h5: [],
   h6: [],
   i: [],
-  img: ['src', 'alt', 'title', 'width', 'height'],
+  img: ['src', 'srcset', 'alt', 'title', 'width', 'height'],
   li: [],
   ol: [],
   p: [],
@@ -103,7 +101,7 @@ export function sanitizeHtml(unsafeHtml, whiteList, sanitizeFn) {
   const domParser = new window.DOMParser()
   const createdDocument = domParser.parseFromString(unsafeHtml, 'text/html')
   const whitelistKeys = Object.keys(whiteList)
-  const elements = makeArray(createdDocument.body.querySelectorAll('*'))
+  const elements = [].concat(...createdDocument.body.querySelectorAll('*'))
 
   for (let i = 0, len = elements.length; i < len; i++) {
     const el = elements[i]
@@ -115,7 +113,7 @@ export function sanitizeHtml(unsafeHtml, whiteList, sanitizeFn) {
       continue
     }
 
-    const attributeList = makeArray(el.attributes)
+    const attributeList = [].concat(...el.attributes)
     const whitelistedAttributes = [].concat(whiteList['*'] || [], whiteList[elName] || [])
 
     attributeList.forEach(attr => {

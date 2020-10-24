@@ -81,12 +81,16 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap (v4.3.1): util/index.js
+   * Bootstrap (v5.0.0-alpha1): util/index.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
    * --------------------------------------------------------------------------
    */
 
   var toType = function toType(obj) {
+    if (obj === null || obj === undefined) {
+      return "" + obj;
+    }
+
     return {}.toString.call(obj).match(/\s([a-z]+)/i)[1].toLowerCase();
   };
 
@@ -158,7 +162,7 @@
    */
 
   var NAME = 'dropdown';
-  var VERSION = '1.0.1';
+  var VERSION = '1.0.2';
   var DATA_KEY = 'xcodiui.dropdown';
   var EVENT_KEY = "." + DATA_KEY;
   var DATA_API_KEY = '.data-api';
@@ -273,7 +277,7 @@
 
       if (!this._inNavbar && !this._inHeader) {
         if (typeof core.createPopper === 'undefined') {
-          throw new TypeError('XcodiuI dropdowns require Popper.js (https://popper.js.org)');
+          throw new TypeError('XcodiUI\'s dropdowns require Popper.js (https://popper.js.org)');
         }
 
         var referenceElement = this._element;
