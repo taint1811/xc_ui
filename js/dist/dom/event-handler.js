@@ -5,8 +5,8 @@
   */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('./polyfill.js')) :
-  typeof define === 'function' && define.amd ? define(['./polyfill.js'], factory) :
-  (global = global || self, global.EventHandler = factory(global.Polyfill));
+  typeof define === 'function' && define.amd ? define(['./polyfill'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.EventHandler = factory(global.Polyfill));
 }(this, (function (polyfill_js) { 'use strict';
 
   /**

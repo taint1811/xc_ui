@@ -723,7 +723,7 @@ var AsyncLoad = /*#__PURE__*/function () {
 
   // Private
   _proto._getConfig = function _getConfig(config) {
-    config = _objectSpread2({}, Default, {}, config);
+    config = _objectSpread2(_objectSpread2({}, Default), config);
     return config;
   };
 
@@ -1618,7 +1618,7 @@ var Carousel = /*#__PURE__*/function () {
   ;
 
   _proto._getConfig = function _getConfig(config) {
-    config = _objectSpread2({}, Default$1, {}, config);
+    config = _objectSpread2(_objectSpread2({}, Default$1), config);
     typeCheckConfig(NAME$3, config, DefaultType);
     return config;
   };
@@ -1912,10 +1912,10 @@ var Carousel = /*#__PURE__*/function () {
   Carousel.carouselInterface = function carouselInterface(element, config) {
     var data = Data.getData(element, DATA_KEY$3);
 
-    var _config = _objectSpread2({}, Default$1, {}, Manipulator.getDataAttributes(element));
+    var _config = _objectSpread2(_objectSpread2({}, Default$1), Manipulator.getDataAttributes(element));
 
     if (typeof config === 'object') {
-      _config = _objectSpread2({}, _config, {}, config);
+      _config = _objectSpread2(_objectSpread2({}, _config), config);
     }
 
     var action = typeof config === 'string' ? config : _config.slide;
@@ -1951,7 +1951,7 @@ var Carousel = /*#__PURE__*/function () {
       return;
     }
 
-    var config = _objectSpread2({}, Manipulator.getDataAttributes(target), {}, Manipulator.getDataAttributes(this));
+    var config = _objectSpread2(_objectSpread2({}, Manipulator.getDataAttributes(target)), Manipulator.getDataAttributes(this));
 
     var slideIndex = this.getAttribute('data-slide-to');
 
@@ -2226,7 +2226,7 @@ var ClassToggler = /*#__PURE__*/function () {
   ;
 
   _proto._getConfig = function _getConfig(config) {
-    config = _objectSpread2({}, this.constructor.Default, {}, Manipulator.getDataAttributes(this._element), {}, config);
+    config = _objectSpread2(_objectSpread2(_objectSpread2({}, this.constructor.Default), Manipulator.getDataAttributes(this._element)), config);
     typeCheckConfig(NAME$4, config, this.constructor.DefaultType);
     return config;
   };
@@ -2571,7 +2571,7 @@ var Collapse = /*#__PURE__*/function () {
   ;
 
   _proto._getConfig = function _getConfig(config) {
-    config = _objectSpread2({}, Default$3, {}, config);
+    config = _objectSpread2(_objectSpread2({}, Default$3), config);
     config.toggle = Boolean(config.toggle); // Coerce string values
 
     typeCheckConfig(NAME$5, config, DefaultType$2);
@@ -2626,7 +2626,7 @@ var Collapse = /*#__PURE__*/function () {
   Collapse.collapseInterface = function collapseInterface(element, config) {
     var data = Data.getData(element, DATA_KEY$5);
 
-    var _config = _objectSpread2({}, Default$3, {}, Manipulator.getDataAttributes(element), {}, typeof config === 'object' && config ? config : {});
+    var _config = _objectSpread2(_objectSpread2(_objectSpread2({}, Default$3), Manipulator.getDataAttributes(element)), typeof config === 'object' && config ? config : {});
 
     if (!data && _config.toggle && typeof config === 'string' && /show|hide/.test(config)) {
       _config.toggle = false;
@@ -2960,7 +2960,7 @@ var Dropdown = /*#__PURE__*/function () {
   };
 
   _proto._getConfig = function _getConfig(config) {
-    config = _objectSpread2({}, this.constructor.Default, {}, Manipulator.getDataAttributes(this._element), {}, config);
+    config = _objectSpread2(_objectSpread2(_objectSpread2({}, this.constructor.Default), Manipulator.getDataAttributes(this._element)), config);
     typeCheckConfig(NAME$6, config, this.constructor.DefaultType);
     return config;
   };
@@ -3048,7 +3048,7 @@ var Dropdown = /*#__PURE__*/function () {
       };
     }
 
-    return _objectSpread2({}, popperConfig, {}, this._config.popperConfig);
+    return _objectSpread2(_objectSpread2({}, popperConfig), this._config.popperConfig);
   } // Static
   ;
 
@@ -3459,7 +3459,7 @@ var Modal = /*#__PURE__*/function () {
   ;
 
   _proto._getConfig = function _getConfig(config) {
-    config = _objectSpread2({}, Default$5, {}, config);
+    config = _objectSpread2(_objectSpread2({}, Default$5), config);
     typeCheckConfig(NAME$7, config, DefaultType$4);
     return config;
   };
@@ -3794,7 +3794,7 @@ var Modal = /*#__PURE__*/function () {
     return this.each(function () {
       var data = Data.getData(this, DATA_KEY$7);
 
-      var _config = _objectSpread2({}, Default$5, {}, Manipulator.getDataAttributes(this), {}, typeof config === 'object' && config ? config : {});
+      var _config = _objectSpread2(_objectSpread2(_objectSpread2({}, Default$5), Manipulator.getDataAttributes(this)), typeof config === 'object' && config ? config : {});
 
       if (!data) {
         data = new Modal(this, _config);
@@ -3861,7 +3861,7 @@ EventHandler.on(document, EVENT_CLICK_DATA_API$7, SELECTOR_DATA_TOGGLE$3, functi
   var data = Data.getData(target, DATA_KEY$7);
 
   if (!data) {
-    var config = _objectSpread2({}, Manipulator.getDataAttributes(target), {}, Manipulator.getDataAttributes(this));
+    var config = _objectSpread2(_objectSpread2({}, Manipulator.getDataAttributes(target)), Manipulator.getDataAttributes(this));
 
     data = new Modal(target, config);
   }
@@ -4425,7 +4425,7 @@ var Tooltip = /*#__PURE__*/function () {
         }
       }
     };
-    return _objectSpread2({}, defaultBsConfig, {}, this.config.popperConfig);
+    return _objectSpread2(_objectSpread2({}, defaultBsConfig), this.config.popperConfig);
   } // _addAttachmentClass(attachment) {
   //   this.getTipElement().classList.add(`${CLASS_PREFIX}-${attachment}`)
   // }
@@ -4515,7 +4515,7 @@ var Tooltip = /*#__PURE__*/function () {
     EventHandler.on(this.element.closest("." + CLASS_NAME_MODAL), 'hide.xcodiui.modal', this._hideModalHandler);
 
     if (this.config.selector) {
-      this.config = _objectSpread2({}, this.config, {
+      this.config = _objectSpread2(_objectSpread2({}, this.config), {}, {
         trigger: 'manual',
         selector: ''
       });
@@ -4620,7 +4620,7 @@ var Tooltip = /*#__PURE__*/function () {
       config.container = config.container[0];
     }
 
-    config = _objectSpread2({}, this.constructor.Default, {}, dataAttributes, {}, typeof config === 'object' && config ? config : {});
+    config = _objectSpread2(_objectSpread2(_objectSpread2({}, this.constructor.Default), dataAttributes), typeof config === 'object' && config ? config : {});
 
     if (typeof config.delay === 'number') {
       config.delay = {
@@ -4799,14 +4799,14 @@ var EVENT_KEY$9 = "." + DATA_KEY$9;
 var CLASS_PREFIX$1 = 'bs-popover';
 var BSCLS_PREFIX_REGEX$1 = new RegExp("(^|\\s)" + CLASS_PREFIX$1 + "\\S+", 'g');
 
-var Default$7 = _objectSpread2({}, Tooltip.Default, {
+var Default$7 = _objectSpread2(_objectSpread2({}, Tooltip.Default), {}, {
   placement: 'right',
   trigger: 'click',
   content: '',
   template: '<div class="popover" role="tooltip">' + '<div class="popover-arrow"></div>' + '<h3 class="popover-header"></h3>' + '<div class="popover-body"></div></div>'
 });
 
-var DefaultType$6 = _objectSpread2({}, Tooltip.DefaultType, {
+var DefaultType$6 = _objectSpread2(_objectSpread2({}, Tooltip.DefaultType), {}, {
   content: '(string|element|function)'
 });
 
@@ -5090,7 +5090,7 @@ var ScrollSpy = /*#__PURE__*/function () {
   ;
 
   _proto._getConfig = function _getConfig(config) {
-    config = _objectSpread2({}, Default$8, {}, typeof config === 'object' && config ? config : {});
+    config = _objectSpread2(_objectSpread2({}, Default$8), typeof config === 'object' && config ? config : {});
 
     if (typeof config.target !== 'string' && isElement(config.target)) {
       var id = config.target.id;
@@ -5481,7 +5481,7 @@ var Sidebar = /*#__PURE__*/function () {
   ;
 
   _proto._getConfig = function _getConfig(config) {
-    config = _objectSpread2({}, this.constructor.Default, {}, Manipulator.getDataAttributes(this._element), {}, config);
+    config = _objectSpread2(_objectSpread2(_objectSpread2({}, this.constructor.Default), Manipulator.getDataAttributes(this._element)), config);
     typeCheckConfig(NAME$b, config, this.constructor.DefaultType);
     return config;
   };
@@ -6228,7 +6228,7 @@ var Toast = /*#__PURE__*/function () {
   ;
 
   _proto._getConfig = function _getConfig(config) {
-    config = _objectSpread2({}, Default$a, {}, Manipulator.getDataAttributes(this._element), {}, typeof config === 'object' && config ? config : {});
+    config = _objectSpread2(_objectSpread2(_objectSpread2({}, Default$a), Manipulator.getDataAttributes(this._element)), typeof config === 'object' && config ? config : {});
     typeCheckConfig(NAME$d, config, this.constructor.DefaultType);
     return config;
   };

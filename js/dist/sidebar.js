@@ -5,79 +5,16 @@
   */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('./dom/data.js'), require('./dom/event-handler.js'), require('./dom/manipulator.js'), require('perfect-scrollbar')) :
-  typeof define === 'function' && define.amd ? define(['./dom/data.js', './dom/event-handler.js', './dom/manipulator.js', 'perfect-scrollbar'], factory) :
-  (global = global || self, global.Sidebar = factory(global.Data, global.EventHandler, global.Manipulator, global.PerfectScrollbar));
+  typeof define === 'function' && define.amd ? define(['./dom/data', './dom/event-handler', './dom/manipulator', 'perfect-scrollbar'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Sidebar = factory(global.Data, global.EventHandler, global.Manipulator, global.PerfectScrollbar));
 }(this, (function (Data, EventHandler, Manipulator, PerfectScrollbar) { 'use strict';
 
-  Data = Data && Object.prototype.hasOwnProperty.call(Data, 'default') ? Data['default'] : Data;
-  EventHandler = EventHandler && Object.prototype.hasOwnProperty.call(EventHandler, 'default') ? EventHandler['default'] : EventHandler;
-  Manipulator = Manipulator && Object.prototype.hasOwnProperty.call(Manipulator, 'default') ? Manipulator['default'] : Manipulator;
-  PerfectScrollbar = PerfectScrollbar && Object.prototype.hasOwnProperty.call(PerfectScrollbar, 'default') ? PerfectScrollbar['default'] : PerfectScrollbar;
+  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-  function _defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    return Constructor;
-  }
-
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-
-    return obj;
-  }
-
-  function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-
-    if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object);
-      if (enumerableOnly) symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-      });
-      keys.push.apply(keys, symbols);
-    }
-
-    return keys;
-  }
-
-  function _objectSpread2(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-
-      if (i % 2) {
-        ownKeys(Object(source), true).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-      }
-    }
-
-    return target;
-  }
+  var Data__default = /*#__PURE__*/_interopDefaultLegacy(Data);
+  var EventHandler__default = /*#__PURE__*/_interopDefaultLegacy(EventHandler);
+  var Manipulator__default = /*#__PURE__*/_interopDefaultLegacy(Manipulator);
+  var PerfectScrollbar__default = /*#__PURE__*/_interopDefaultLegacy(PerfectScrollbar);
 
   /**
    * --------------------------------------------------------------------------
@@ -172,6 +109,15 @@
     return null;
   };
 
+  function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+  function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -229,7 +175,7 @@
 
   var Sidebar = /*#__PURE__*/function () {
     function Sidebar(element, config) {
-      if (typeof PerfectScrollbar === 'undefined') {
+      if (typeof PerfectScrollbar__default['default'] === 'undefined') {
         throw new TypeError('XcodiUI\'s sidebar require Perfect Scrollbar');
       }
 
@@ -250,7 +196,7 @@
 
       this._addEventListeners();
 
-      Data.setData(element, DATA_KEY, this);
+      Data__default['default'].setData(element, DATA_KEY, this);
     } // Getters
 
 
@@ -260,21 +206,21 @@
     _proto.open = function open(breakpoint) {
       var _this = this;
 
-      EventHandler.trigger(this._element, EVENT_OPEN);
+      EventHandler__default['default'].trigger(this._element, EVENT_OPEN);
 
       if (this._isMobile()) {
         this._addClassName(this._firstBreakpointClassName());
 
         this._showBackdrop();
 
-        EventHandler.one(this._element, TRANSITION_END, function () {
+        EventHandler__default['default'].one(this._element, TRANSITION_END, function () {
           _this._addClickOutListener();
         });
       } else if (breakpoint) {
         this._addClassName(this._getBreakpointClassName(breakpoint));
 
         if (this._isOverlaid()) {
-          EventHandler.one(this._element, TRANSITION_END, function () {
+          EventHandler__default['default'].one(this._element, TRANSITION_END, function () {
             _this._addClickOutListener();
           });
         }
@@ -282,7 +228,7 @@
         this._addClassName(this._firstBreakpointClassName());
 
         if (this._isOverlaid()) {
-          EventHandler.one(this._element, TRANSITION_END, function () {
+          EventHandler__default['default'].one(this._element, TRANSITION_END, function () {
             _this._addClickOutListener();
           });
         }
@@ -291,19 +237,19 @@
       var complete = function complete() {
         if (_this._isVisible() === true) {
           _this._open = true;
-          EventHandler.trigger(_this._element, EVENT_OPENED);
+          EventHandler__default['default'].trigger(_this._element, EVENT_OPENED);
         }
       };
 
       var transitionDuration = getTransitionDurationFromElement(this._element);
-      EventHandler.one(this._element, TRANSITION_END, complete);
+      EventHandler__default['default'].one(this._element, TRANSITION_END, complete);
       emulateTransitionEnd(this._element, transitionDuration);
     };
 
     _proto.close = function close(breakpoint) {
       var _this2 = this;
 
-      EventHandler.trigger(this._element, EVENT_CLOSE);
+      EventHandler__default['default'].trigger(this._element, EVENT_CLOSE);
 
       if (this._isMobile()) {
         this._element.classList.remove(this._firstBreakpointClassName());
@@ -328,12 +274,12 @@
       var complete = function complete() {
         if (_this2._isVisible() === false) {
           _this2._open = false;
-          EventHandler.trigger(_this2._element, EVENT_CLOSED);
+          EventHandler__default['default'].trigger(_this2._element, EVENT_CLOSED);
         }
       };
 
       var transitionDuration = getTransitionDurationFromElement(this._element);
-      EventHandler.one(this._element, TRANSITION_END, complete);
+      EventHandler__default['default'].one(this._element, TRANSITION_END, complete);
       emulateTransitionEnd(this._element, transitionDuration);
     };
 
@@ -368,7 +314,7 @@
         this._element.classList.remove(CLASS_NAME_SIDEBAR_MINIMIZED);
 
         this._minimize = false;
-        EventHandler.one(this._element, TRANSITION_END, this._psInit());
+        EventHandler__default['default'].one(this._element, TRANSITION_END, this._psInit());
       }
 
       if (this._element.classList.contains(CLASS_NAME_SIDEBAR_UNFOLDABLE)) {
@@ -380,7 +326,7 @@
     ;
 
     _proto._getConfig = function _getConfig(config) {
-      config = _objectSpread2({}, this.constructor.Default, {}, Manipulator.getDataAttributes(this._element), {}, config);
+      config = _objectSpread(_objectSpread(_objectSpread({}, this.constructor.Default), Manipulator__default['default'].getDataAttributes(this._element)), config);
       typeCheckConfig(NAME, config, this.constructor.DefaultType);
       return config;
     };
@@ -474,13 +420,13 @@
     _proto._addClickOutListener = function _addClickOutListener() {
       var _this3 = this;
 
-      EventHandler.on(document, EVENT_CLICK_DATA_API, function (event) {
+      EventHandler__default['default'].on(document, EVENT_CLICK_DATA_API, function (event) {
         _this3._clickOutListener(event, _this3);
       });
     };
 
     _proto._removeClickOutListener = function _removeClickOutListener() {
-      EventHandler.off(document, EVENT_CLICK_DATA_API);
+      EventHandler__default['default'].off(document, EVENT_CLICK_DATA_API);
     } // Sidebar navigation
     ;
 
@@ -541,7 +487,7 @@
 
     _proto._psInit = function _psInit() {
       if (this._element.querySelector(SELECTOR_NAVIGATION_CONTAINER) && !this._isIOS()) {
-        this._ps = new PerfectScrollbar(this._element.querySelector(SELECTOR_NAVIGATION_CONTAINER), {
+        this._ps = new PerfectScrollbar__default['default'](this._element.querySelector(SELECTOR_NAVIGATION_CONTAINER), {
           suppressScrollX: true,
           wheelPropagation: false
         });
@@ -637,7 +583,7 @@
         this._addClickOutListener();
       }
 
-      EventHandler.on(this._element, EVENT_CLASS_TOGGLE, function (event) {
+      EventHandler__default['default'].on(this._element, EVENT_CLASS_TOGGLE, function (event) {
         if (event.detail.className === CLASS_NAME_SIDEBAR_MINIMIZED) {
           if (_this5._element.classList.contains(CLASS_NAME_SIDEBAR_MINIMIZED)) {
             _this5.minimize();
@@ -669,12 +615,12 @@
           }
         }
       });
-      EventHandler.on(this._element, EVENT_CLICK_DATA_API, SELECTOR_NAV_DROPDOWN_TOGGLE, function (event) {
+      EventHandler__default['default'].on(this._element, EVENT_CLICK_DATA_API, SELECTOR_NAV_DROPDOWN_TOGGLE, function (event) {
         event.preventDefault();
 
         _this5._toggleDropdown(event, _this5);
       });
-      EventHandler.on(this._element, EVENT_CLICK_DATA_API, SELECTOR_NAV_LINK, function () {
+      EventHandler__default['default'].on(this._element, EVENT_CLICK_DATA_API, SELECTOR_NAV_LINK, function () {
         if (_this5._isMobile()) {
           _this5.close();
         }
@@ -683,7 +629,7 @@
     ;
 
     Sidebar._sidebarInterface = function _sidebarInterface(element, config) {
-      var data = Data.getData(element, DATA_KEY);
+      var data = Data__default['default'].getData(element, DATA_KEY);
 
       var _config = typeof config === 'object' && config;
 
@@ -707,7 +653,7 @@
     };
 
     Sidebar.getInstance = function getInstance(element) {
-      return Data.getData(element, DATA_KEY);
+      return Data__default['default'].getData(element, DATA_KEY);
     };
 
     _createClass(Sidebar, null, [{
@@ -736,7 +682,7 @@
    */
 
 
-  EventHandler.on(window, EVENT_LOAD_DATA_API, function () {
+  EventHandler__default['default'].on(window, EVENT_LOAD_DATA_API, function () {
     // eslint-disable-next-line unicorn/prefer-spread
     Array.from(document.querySelectorAll(SELECTOR_SIDEBAR)).forEach(function (element) {
       Sidebar._sidebarInterface(element);
