@@ -99,7 +99,7 @@
         "rimraf": "^3.0.2",
         "rollup": "^2.33.3",
         "rollup-plugin-istanbul": "^2.0.1",
-        "shelljs": "^0.8.4",
+        "shelljs": "^0.8.5",
         "shx": "^0.3.3",
         "stylelint": "13.8.0",
         "stylelint-config-recommended-scss": "^4.2.0",
