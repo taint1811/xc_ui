@@ -1,6 +1,6 @@
 /*!
   * Xcodi async-load.js v1.0.0 (https://taint1811.github.io)
-  * Copyright 2020 Tai Nguyen
+  * Copyright 2022 Tai Nguyen
   * Licensed under MIT (https://taint1811.github.io)
   */
 (function (global, factory) {

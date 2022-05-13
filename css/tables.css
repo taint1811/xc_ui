@@ -1,7 +1,7 @@
 .table {
   width: 100%;
   margin-bottom: 1rem;
-  color: #4f5d73;
+  color: #2c384af2;
 }
 
 .table th,
@@ -56,7 +56,7 @@
 }
 
 .table-hover tbody tr:hover {
-  color: #4f5d73;
+  color: #2c384af2;
   background-color: rgba(0, 0, 21, 0.075);
 }
 
