@@ -410,7 +410,7 @@
    * ------------------------------------------------------------------------
    */
 
-  var $$1 = getjQuery();
+  var $ = getjQuery();
   var namespaceRegex = /[^.]*(?=\..*)\.|.*/;
   var stripNameRegex = /\..*/;
   var stripUidRegex = /::\d+$/;
@@ -628,9 +628,9 @@
       var defaultPrevented = false;
       var evt = null;
 
-      if (inNamespace && $$1) {
-        jQueryEvent = $$1.Event(event, args);
-        $$1(element).trigger(jQueryEvent);
+      if (inNamespace && $) {
+        jQueryEvent = $.Event(event, args);
+        $(element).trigger(jQueryEvent);
         bubbles = !jQueryEvent.isPropagationStopped();
         nativeDispatch = !jQueryEvent.isImmediatePropagationStopped();
         defaultPrevented = jQueryEvent.isDefaultPrevented();
@@ -926,7 +926,7 @@
     return AsyncLoad;
   }();
 
-  var $$2 = getjQuery();
+  var $$1 = getjQuery();
   /**
    * ------------------------------------------------------------------------
    * jQuery
@@ -934,13 +934,13 @@
    * add .asyncLoad to jQuery only if jQuery is present
    */
 
-  if ($$2) {
-    var JQUERY_NO_CONFLICT = $$2.fn[NAME];
-    $$2.fn[NAME] = AsyncLoad.jQueryInterface;
-    $$2.fn[NAME].Constructor = AsyncLoad;
+  if ($$1) {
+    var JQUERY_NO_CONFLICT = $$1.fn[NAME];
+    $$1.fn[NAME] = AsyncLoad.jQueryInterface;
+    $$1.fn[NAME].Constructor = AsyncLoad;
 
-    $$2.fn[NAME].noConflict = function () {
-      $$2.fn[NAME] = JQUERY_NO_CONFLICT;
+    $$1.fn[NAME].noConflict = function () {
+      $$1.fn[NAME] = JQUERY_NO_CONFLICT;
       return AsyncLoad.jQueryInterface;
     };
   }
@@ -1080,7 +1080,7 @@
 
 
   EventHandler.on(document, EVENT_CLICK_DATA_API$1, SELECTOR_DISMISS, Alert.handleDismiss(new Alert()));
-  var $$3 = getjQuery();
+  var $$2 = getjQuery();
   /**
    * ------------------------------------------------------------------------
    * jQuery
@@ -1090,13 +1090,13 @@
 
   /* istanbul ignore if */
 
-  if ($$3) {
-    var JQUERY_NO_CONFLICT$1 = $$3.fn[NAME$1];
-    $$3.fn[NAME$1] = Alert.jQueryInterface;
-    $$3.fn[NAME$1].Constructor = Alert;
+  if ($$2) {
+    var JQUERY_NO_CONFLICT$1 = $$2.fn[NAME$1];
+    $$2.fn[NAME$1] = Alert.jQueryInterface;
+    $$2.fn[NAME$1].Constructor = Alert;
 
-    $$3.fn[NAME$1].noConflict = function () {
-      $$3.fn[NAME$1] = JQUERY_NO_CONFLICT$1;
+    $$2.fn[NAME$1].noConflict = function () {
+      $$2.fn[NAME$1] = JQUERY_NO_CONFLICT$1;
       return Alert.jQueryInterface;
     };
   }
@@ -1331,7 +1331,7 @@
       button.classList.remove(CLASS_NAME_FOCUS);
     }
   });
-  var $$4 = getjQuery();
+  var $$3 = getjQuery();
   /**
    * ------------------------------------------------------------------------
    * jQuery
@@ -1341,13 +1341,13 @@
 
   /* istanbul ignore if */
 
-  if ($$4) {
-    var JQUERY_NO_CONFLICT$2 = $$4.fn[NAME$2];
-    $$4.fn[NAME$2] = Button.jQueryInterface;
-    $$4.fn[NAME$2].Constructor = Button;
+  if ($$3) {
+    var JQUERY_NO_CONFLICT$2 = $$3.fn[NAME$2];
+    $$3.fn[NAME$2] = Button.jQueryInterface;
+    $$3.fn[NAME$2].Constructor = Button;
 
-    $$4.fn[NAME$2].noConflict = function () {
-      $$4.fn[NAME$2] = JQUERY_NO_CONFLICT$2;
+    $$3.fn[NAME$2].noConflict = function () {
+      $$3.fn[NAME$2] = JQUERY_NO_CONFLICT$2;
       return Button.jQueryInterface;
     };
   }
@@ -2008,7 +2008,7 @@
       Carousel.carouselInterface(carousels[i], Data.getData(carousels[i], DATA_KEY$3));
     }
   });
-  var $$5 = getjQuery();
+  var $$4 = getjQuery();
   /**
    * ------------------------------------------------------------------------
    * jQuery
@@ -2018,13 +2018,13 @@
 
   /* istanbul ignore if */
 
-  if ($$5) {
-    var JQUERY_NO_CONFLICT$3 = $$5.fn[NAME$3];
-    $$5.fn[NAME$3] = Carousel.jQueryInterface;
-    $$5.fn[NAME$3].Constructor = Carousel;
+  if ($$4) {
+    var JQUERY_NO_CONFLICT$3 = $$4.fn[NAME$3];
+    $$4.fn[NAME$3] = Carousel.jQueryInterface;
+    $$4.fn[NAME$3].Constructor = Carousel;
 
-    $$5.fn[NAME$3].noConflict = function () {
-      $$5.fn[NAME$3] = JQUERY_NO_CONFLICT$3;
+    $$4.fn[NAME$3].noConflict = function () {
+      $$4.fn[NAME$3] = JQUERY_NO_CONFLICT$3;
       return Carousel.jQueryInterface;
     };
   }
@@ -2313,7 +2313,7 @@
       ClassToggler.classTogglerInterface(toggler, 'class');
     }
   });
-  var $$6 = getjQuery();
+  var $$5 = getjQuery();
   /**
    * ------------------------------------------------------------------------
    * jQuery
@@ -2321,13 +2321,13 @@
    * add .xc-class-toggler to jQuery only if jQuery is present
    */
 
-  if ($$6) {
-    var JQUERY_NO_CONFLICT$4 = $$6.fn[NAME$4];
-    $$6.fn[NAME$4] = ClassToggler.jQueryInterface;
-    $$6.fn[NAME$4].Constructor = ClassToggler;
+  if ($$5) {
+    var JQUERY_NO_CONFLICT$4 = $$5.fn[NAME$4];
+    $$5.fn[NAME$4] = ClassToggler.jQueryInterface;
+    $$5.fn[NAME$4].Constructor = ClassToggler;
 
-    $$6.fn[NAME$4].noConflict = function () {
-      $$6.fn[NAME$4] = JQUERY_NO_CONFLICT$4;
+    $$5.fn[NAME$4].noConflict = function () {
+      $$5.fn[NAME$4] = JQUERY_NO_CONFLICT$4;
       return ClassToggler.jQueryInterface;
     };
   }
@@ -2711,7 +2711,7 @@
       Collapse.collapseInterface(element, config);
     });
   });
-  var $$7 = getjQuery();
+  var $$6 = getjQuery();
   /**
    * ------------------------------------------------------------------------
    * jQuery
@@ -2721,13 +2721,13 @@
 
   /* istanbul ignore if */
 
-  if ($$7) {
-    var JQUERY_NO_CONFLICT$5 = $$7.fn[NAME$5];
-    $$7.fn[NAME$5] = Collapse.jQueryInterface;
-    $$7.fn[NAME$5].Constructor = Collapse;
+  if ($$6) {
+    var JQUERY_NO_CONFLICT$5 = $$6.fn[NAME$5];
+    $$6.fn[NAME$5] = Collapse.jQueryInterface;
+    $$6.fn[NAME$5].Constructor = Collapse;
 
-    $$7.fn[NAME$5].noConflict = function () {
-      $$7.fn[NAME$5] = JQUERY_NO_CONFLICT$5;
+    $$6.fn[NAME$5].noConflict = function () {
+      $$6.fn[NAME$5] = JQUERY_NO_CONFLICT$5;
       return Collapse.jQueryInterface;
     };
   }
@@ -3246,7 +3246,7 @@
   EventHandler.on(document, EVENT_CLICK_DATA_API$6, SELECTOR_FORM_CHILD, function (e) {
     return e.stopPropagation();
   });
-  var $$8 = getjQuery();
+  var $$7 = getjQuery();
   /**
    * ------------------------------------------------------------------------
    * jQuery
@@ -3256,54 +3256,29 @@
 
   /* istanbul ignore if */
 
-  if ($$8) {
-    var JQUERY_NO_CONFLICT$6 = $$8.fn[NAME$6];
-    $$8.fn[NAME$6] = Dropdown.jQueryInterface;
-    $$8.fn[NAME$6].Constructor = Dropdown;
+  if ($$7) {
+    var JQUERY_NO_CONFLICT$6 = $$7.fn[NAME$6];
+    $$7.fn[NAME$6] = Dropdown.jQueryInterface;
+    $$7.fn[NAME$6].Constructor = Dropdown;
 
-    $$8.fn[NAME$6].noConflict = function () {
-      $$8.fn[NAME$6] = JQUERY_NO_CONFLICT$6;
+    $$7.fn[NAME$6].noConflict = function () {
+      $$7.fn[NAME$6] = JQUERY_NO_CONFLICT$6;
       return Dropdown.jQueryInterface;
     };
   }
 
   /**
+   * ------------------------------------------------------------------------
    * Constants
+   * ------------------------------------------------------------------------
    */
 
   var NAME$7 = 'modal';
-  var VERSION$7 = '4.6.2';
+  var VERSION$7 = '1.0.2';
   var DATA_KEY$7 = 'xcodiui.modal';
   var EVENT_KEY$7 = "." + DATA_KEY$7;
   var DATA_API_KEY$7 = '.data-api';
-  var JQUERY_NO_CONFLICT$7 = $.fn[NAME$7];
-  var ESCAPE_KEYCODE = 27; // KeyboardEvent.which value for Escape (Esc) key
-
-  var CLASS_NAME_SCROLLABLE = 'modal-dialog-scrollable';
-  var CLASS_NAME_SCROLLBAR_MEASURER = 'modal-scrollbar-measure';
-  var CLASS_NAME_BACKDROP = 'modal-backdrop';
-  var CLASS_NAME_OPEN = 'modal-open';
-  var CLASS_NAME_FADE = 'fade';
-  var CLASS_NAME_SHOW$3 = 'show';
-  var CLASS_NAME_STATIC = 'modal-static';
-  var EVENT_HIDE$2 = "hide" + EVENT_KEY$7;
-  var EVENT_HIDE_PREVENTED = "hidePrevented" + EVENT_KEY$7;
-  var EVENT_HIDDEN$2 = "hidden" + EVENT_KEY$7;
-  var EVENT_SHOW$2 = "show" + EVENT_KEY$7;
-  var EVENT_SHOWN$2 = "shown" + EVENT_KEY$7;
-  var EVENT_FOCUSIN = "focusin" + EVENT_KEY$7;
-  var EVENT_RESIZE = "resize" + EVENT_KEY$7;
-  var EVENT_CLICK_DISMISS = "click.dismiss" + EVENT_KEY$7;
-  var EVENT_KEYDOWN_DISMISS = "keydown.dismiss" + EVENT_KEY$7;
-  var EVENT_MOUSEUP_DISMISS = "mouseup.dismiss" + EVENT_KEY$7;
-  var EVENT_MOUSEDOWN_DISMISS = "mousedown.dismiss" + EVENT_KEY$7;
-  var EVENT_CLICK_DATA_API$7 = "click" + EVENT_KEY$7 + DATA_API_KEY$7;
-  var SELECTOR_DIALOG = '.modal-dialog';
-  var SELECTOR_MODAL_BODY = '.modal-body';
-  var SELECTOR_DATA_TOGGLE$3 = '[data-toggle="modal"]';
-  var SELECTOR_DATA_DISMISS = '[data-dismiss="modal"]';
-  var SELECTOR_FIXED_CONTENT = '.fixed-top, .fixed-bottom, .is-fixed, .sticky-top';
-  var SELECTOR_STICKY_CONTENT = '.sticky-top';
+  var ESCAPE_KEY$1 = 'Escape';
   var Default$5 = {
     backdrop: true,
     keyboard: true,
@@ -3316,21 +3291,48 @@
     focus: 'boolean',
     show: 'boolean'
   };
+  var EVENT_HIDE$2 = "hide" + EVENT_KEY$7;
+  var EVENT_HIDE_PREVENTED = "hidePrevented" + EVENT_KEY$7;
+  var EVENT_HIDDEN$2 = "hidden" + EVENT_KEY$7;
+  var EVENT_SHOW$2 = "show" + EVENT_KEY$7;
+  var EVENT_SHOWN$2 = "shown" + EVENT_KEY$7;
+  var EVENT_FOCUSIN = "focusin" + EVENT_KEY$7;
+  var EVENT_RESIZE = "resize" + EVENT_KEY$7;
+  var EVENT_CLICK_DISMISS = "click.dismiss" + EVENT_KEY$7;
+  var EVENT_KEYDOWN_DISMISS = "keydown.dismiss" + EVENT_KEY$7;
+  var EVENT_MOUSEUP_DISMISS = "mouseup.dismiss" + EVENT_KEY$7;
+  var EVENT_MOUSEDOWN_DISMISS = "mousedown.dismiss" + EVENT_KEY$7;
+  var EVENT_CLICK_DATA_API$7 = "click" + EVENT_KEY$7 + DATA_API_KEY$7;
+  var CLASS_NAME_SCROLLBAR_MEASURER = 'modal-scrollbar-measure';
+  var CLASS_NAME_BACKDROP = 'modal-backdrop';
+  var CLASS_NAME_OPEN = 'modal-open';
+  var CLASS_NAME_FADE = 'fade';
+  var CLASS_NAME_SHOW$3 = 'show';
+  var CLASS_NAME_STATIC = 'modal-static';
+  var SELECTOR_DIALOG = '.modal-dialog';
+  var SELECTOR_MODAL_BODY = '.modal-body';
+  var SELECTOR_DATA_TOGGLE$3 = '[data-toggle="modal"]';
+  var SELECTOR_DATA_DISMISS = '[data-dismiss="modal"]';
+  var SELECTOR_FIXED_CONTENT = '.fixed-top, .fixed-bottom, .is-fixed, .sticky-top';
+  var SELECTOR_STICKY_CONTENT = '.sticky-top';
   /**
-   * Class definition
+   * ------------------------------------------------------------------------
+   * Class Definition
+   * ------------------------------------------------------------------------
    */
 
   var Modal = /*#__PURE__*/function () {
     function Modal(element, config) {
       this._config = this._getConfig(config);
       this._element = element;
-      this._dialog = element.querySelector(SELECTOR_DIALOG);
+      this._dialog = SelectorEngine.findOne(SELECTOR_DIALOG, element);
       this._backdrop = null;
       this._isShown = false;
       this._isBodyOverflowing = false;
       this._ignoreBackdropClick = false;
       this._isTransitioning = false;
       this._scrollbarWidth = 0;
+      Data.setData(element, DATA_KEY$7, this);
     } // Getters
 
 
@@ -3348,20 +3350,19 @@
         return;
       }
 
-      var showEvent = $.Event(EVENT_SHOW$2, {
+      if (this._element.classList.contains(CLASS_NAME_FADE)) {
+        this._isTransitioning = true;
+      }
+
+      var showEvent = EventHandler.trigger(this._element, EVENT_SHOW$2, {
         relatedTarget: relatedTarget
       });
-      $(this._element).trigger(showEvent);
 
-      if (showEvent.isDefaultPrevented()) {
+      if (this._isShown || showEvent.defaultPrevented) {
         return;
       }
 
       this._isShown = true;
-
-      if ($(this._element).hasClass(CLASS_NAME_FADE)) {
-        this._isTransitioning = true;
-      }
 
       this._checkScrollbar();
 
@@ -3373,12 +3374,12 @@
 
       this._setResizeEvent();
 
-      $(this._element).on(EVENT_CLICK_DISMISS, SELECTOR_DATA_DISMISS, function (event) {
+      EventHandler.on(this._element, EVENT_CLICK_DISMISS, SELECTOR_DATA_DISMISS, function (event) {
         return _this.hide(event);
       });
-      $(this._dialog).on(EVENT_MOUSEDOWN_DISMISS, function () {
-        $(_this._element).one(EVENT_MOUSEUP_DISMISS, function (event) {
-          if ($(event.target).is(_this._element)) {
+      EventHandler.on(this._dialog, EVENT_MOUSEDOWN_DISMISS, function () {
+        EventHandler.one(_this._element, EVENT_MOUSEUP_DISMISS, function (event) {
+          if (event.target === _this._element) {
             _this._ignoreBackdropClick = true;
           }
         });
@@ -3400,15 +3401,15 @@
         return;
       }
 
-      var hideEvent = $.Event(EVENT_HIDE$2);
-      $(this._element).trigger(hideEvent);
+      var hideEvent = EventHandler.trigger(this._element, EVENT_HIDE$2);
 
-      if (!this._isShown || hideEvent.isDefaultPrevented()) {
+      if (hideEvent.defaultPrevented) {
         return;
       }
 
       this._isShown = false;
-      var transition = $(this._element).hasClass(CLASS_NAME_FADE);
+
+      var transition = this._element.classList.contains(CLASS_NAME_FADE);
 
       if (transition) {
         this._isTransitioning = true;
@@ -3418,16 +3419,19 @@
 
       this._setResizeEvent();
 
-      $(document).off(EVENT_FOCUSIN);
-      $(this._element).removeClass(CLASS_NAME_SHOW$3);
-      $(this._element).off(EVENT_CLICK_DISMISS);
-      $(this._dialog).off(EVENT_MOUSEDOWN_DISMISS);
+      EventHandler.off(document, EVENT_FOCUSIN);
+
+      this._element.classList.remove(CLASS_NAME_SHOW$3);
+
+      EventHandler.off(this._element, EVENT_CLICK_DISMISS);
+      EventHandler.off(this._dialog, EVENT_MOUSEDOWN_DISMISS);
 
       if (transition) {
-        var transitionDuration = Util.getTransitionDurationFromElement(this._element);
-        $(this._element).one(Util.TRANSITION_END, function (event) {
+        var transitionDuration = getTransitionDurationFromElement(this._element);
+        EventHandler.one(this._element, TRANSITION_END, function (event) {
           return _this2._hideModal(event);
-        }).emulateTransitionEnd(transitionDuration);
+        });
+        emulateTransitionEnd(this._element, transitionDuration);
       } else {
         this._hideModal();
       }
@@ -3435,7 +3439,7 @@
 
     _proto.dispose = function dispose() {
       [window, this._element, this._dialog].forEach(function (htmlElement) {
-        return $(htmlElement).off(EVENT_KEY$7);
+        return EventHandler.off(htmlElement, EVENT_KEY$7);
       });
       /**
        * `document` has 2 events `EVENT_FOCUSIN` and `EVENT_CLICK_DATA_API`
@@ -3443,8 +3447,8 @@
        * It will remove `EVENT_CLICK_DATA_API` event that should remain
        */
 
-      $(document).off(EVENT_FOCUSIN);
-      $.removeData(this._element, DATA_KEY$7);
+      EventHandler.off(document, EVENT_FOCUSIN);
+      Data.removeData(this._element, DATA_KEY$7);
       this._config = null;
       this._element = null;
       this._dialog = null;
@@ -3463,48 +3467,16 @@
 
     _proto._getConfig = function _getConfig(config) {
       config = _objectSpread2(_objectSpread2({}, Default$5), config);
-      Util.typeCheckConfig(NAME$7, config, DefaultType$4);
+      typeCheckConfig(NAME$7, config, DefaultType$4);
       return config;
     };
 
-    _proto._triggerBackdropTransition = function _triggerBackdropTransition() {
+    _proto._showElement = function _showElement(relatedTarget) {
       var _this3 = this;
 
-      var hideEventPrevented = $.Event(EVENT_HIDE_PREVENTED);
-      $(this._element).trigger(hideEventPrevented);
+      var transition = this._element.classList.contains(CLASS_NAME_FADE);
 
-      if (hideEventPrevented.isDefaultPrevented()) {
-        return;
-      }
-
-      var isModalOverflowing = this._element.scrollHeight > document.documentElement.clientHeight;
-
-      if (!isModalOverflowing) {
-        this._element.style.overflowY = 'hidden';
-      }
-
-      this._element.classList.add(CLASS_NAME_STATIC);
-
-      var modalTransitionDuration = Util.getTransitionDurationFromElement(this._dialog);
-      $(this._element).off(Util.TRANSITION_END);
-      $(this._element).one(Util.TRANSITION_END, function () {
-        _this3._element.classList.remove(CLASS_NAME_STATIC);
-
-        if (!isModalOverflowing) {
-          $(_this3._element).one(Util.TRANSITION_END, function () {
-            _this3._element.style.overflowY = '';
-          }).emulateTransitionEnd(_this3._element, modalTransitionDuration);
-        }
-      }).emulateTransitionEnd(modalTransitionDuration);
-
-      this._element.focus();
-    };
-
-    _proto._showElement = function _showElement(relatedTarget) {
-      var _this4 = this;
-
-      var transition = $(this._element).hasClass(CLASS_NAME_FADE);
-      var modalBody = this._dialog ? this._dialog.querySelector(SELECTOR_MODAL_BODY) : null;
+      var modalBody = SelectorEngine.findOne(SELECTOR_MODAL_BODY, this._dialog);
 
       if (!this._element.parentNode || this._element.parentNode.nodeType !== Node.ELEMENT_NODE) {
         // Don't move modal's DOM position
@@ -3519,86 +3491,86 @@
 
       this._element.setAttribute('role', 'dialog');
 
-      if ($(this._dialog).hasClass(CLASS_NAME_SCROLLABLE) && modalBody) {
+      this._element.scrollTop = 0;
+
+      if (modalBody) {
         modalBody.scrollTop = 0;
-      } else {
-        this._element.scrollTop = 0;
       }
 
       if (transition) {
-        Util.reflow(this._element);
+        reflow(this._element);
       }
 
-      $(this._element).addClass(CLASS_NAME_SHOW$3);
+      this._element.classList.add(CLASS_NAME_SHOW$3);
 
       if (this._config.focus) {
         this._enforceFocus();
       }
 
-      var shownEvent = $.Event(EVENT_SHOWN$2, {
-        relatedTarget: relatedTarget
-      });
-
       var transitionComplete = function transitionComplete() {
-        if (_this4._config.focus) {
-          _this4._element.focus();
+        if (_this3._config.focus) {
+          _this3._element.focus();
         }
 
-        _this4._isTransitioning = false;
-        $(_this4._element).trigger(shownEvent);
+        _this3._isTransitioning = false;
+        EventHandler.trigger(_this3._element, EVENT_SHOWN$2, {
+          relatedTarget: relatedTarget
+        });
       };
 
       if (transition) {
-        var transitionDuration = Util.getTransitionDurationFromElement(this._dialog);
-        $(this._dialog).one(Util.TRANSITION_END, transitionComplete).emulateTransitionEnd(transitionDuration);
+        var transitionDuration = getTransitionDurationFromElement(this._dialog);
+        EventHandler.one(this._dialog, TRANSITION_END, transitionComplete);
+        emulateTransitionEnd(this._dialog, transitionDuration);
       } else {
         transitionComplete();
       }
     };
 
     _proto._enforceFocus = function _enforceFocus() {
-      var _this5 = this;
+      var _this4 = this;
 
-      $(document).off(EVENT_FOCUSIN) // Guard against infinite focus loop
-      .on(EVENT_FOCUSIN, function (event) {
-        if (document !== event.target && _this5._element !== event.target && $(_this5._element).has(event.target).length === 0) {
-          _this5._element.focus();
+      EventHandler.off(document, EVENT_FOCUSIN); // guard against infinite focus loop
+
+      EventHandler.on(document, EVENT_FOCUSIN, function (event) {
+        if (document !== event.target && _this4._element !== event.target && !_this4._element.contains(event.target)) {
+          _this4._element.focus();
         }
       });
     };
 
     _proto._setEscapeEvent = function _setEscapeEvent() {
-      var _this6 = this;
+      var _this5 = this;
 
       if (this._isShown) {
-        $(this._element).on(EVENT_KEYDOWN_DISMISS, function (event) {
-          if (_this6._config.keyboard && event.which === ESCAPE_KEYCODE) {
+        EventHandler.on(this._element, EVENT_KEYDOWN_DISMISS, function (event) {
+          if (_this5._config.keyboard && event.key === ESCAPE_KEY$1) {
             event.preventDefault();
 
-            _this6.hide();
-          } else if (!_this6._config.keyboard && event.which === ESCAPE_KEYCODE) {
-            _this6._triggerBackdropTransition();
+            _this5.hide();
+          } else if (!_this5._config.keyboard && event.key === ESCAPE_KEY$1) {
+            _this5._triggerBackdropTransition();
           }
         });
-      } else if (!this._isShown) {
-        $(this._element).off(EVENT_KEYDOWN_DISMISS);
+      } else {
+        EventHandler.off(this._element, EVENT_KEYDOWN_DISMISS);
       }
     };
 
     _proto._setResizeEvent = function _setResizeEvent() {
-      var _this7 = this;
+      var _this6 = this;
 
       if (this._isShown) {
-        $(window).on(EVENT_RESIZE, function (event) {
-          return _this7.handleUpdate(event);
+        EventHandler.on(window, EVENT_RESIZE, function () {
+          return _this6._adjustDialog();
         });
       } else {
-        $(window).off(EVENT_RESIZE);
+        EventHandler.off(window, EVENT_RESIZE);
       }
     };
 
     _proto._hideModal = function _hideModal() {
-      var _this8 = this;
+      var _this7 = this;
 
       this._element.style.display = 'none';
 
@@ -3611,27 +3583,26 @@
       this._isTransitioning = false;
 
       this._showBackdrop(function () {
-        $(document.body).removeClass(CLASS_NAME_OPEN);
+        document.body.classList.remove(CLASS_NAME_OPEN);
 
-        _this8._resetAdjustments();
+        _this7._resetAdjustments();
 
-        _this8._resetScrollbar();
+        _this7._resetScrollbar();
 
-        $(_this8._element).trigger(EVENT_HIDDEN$2);
+        EventHandler.trigger(_this7._element, EVENT_HIDDEN$2);
       });
     };
 
     _proto._removeBackdrop = function _removeBackdrop() {
-      if (this._backdrop) {
-        $(this._backdrop).remove();
-        this._backdrop = null;
-      }
+      this._backdrop.parentNode.removeChild(this._backdrop);
+
+      this._backdrop = null;
     };
 
     _proto._showBackdrop = function _showBackdrop(callback) {
-      var _this9 = this;
+      var _this8 = this;
 
-      var animate = $(this._element).hasClass(CLASS_NAME_FADE) ? CLASS_NAME_FADE : '';
+      var animate = this._element.classList.contains(CLASS_NAME_FADE) ? CLASS_NAME_FADE : '';
 
       if (this._isShown && this._config.backdrop) {
         this._backdrop = document.createElement('div');
@@ -3641,10 +3612,10 @@
           this._backdrop.classList.add(animate);
         }
 
-        $(this._backdrop).appendTo(document.body);
-        $(this._element).on(EVENT_CLICK_DISMISS, function (event) {
-          if (_this9._ignoreBackdropClick) {
-            _this9._ignoreBackdropClick = false;
+        document.body.appendChild(this._backdrop);
+        EventHandler.on(this._element, EVENT_CLICK_DISMISS, function (event) {
+          if (_this8._ignoreBackdropClick) {
+            _this8._ignoreBackdropClick = false;
             return;
           }
 
@@ -3652,54 +3623,83 @@
             return;
           }
 
-          if (_this9._config.backdrop === 'static') {
-            _this9._triggerBackdropTransition();
-          } else {
-            _this9.hide();
-          }
+          _this8._triggerBackdropTransition();
         });
 
         if (animate) {
-          Util.reflow(this._backdrop);
+          reflow(this._backdrop);
         }
 
-        $(this._backdrop).addClass(CLASS_NAME_SHOW$3);
-
-        if (!callback) {
-          return;
-        }
+        this._backdrop.classList.add(CLASS_NAME_SHOW$3);
 
         if (!animate) {
           callback();
           return;
         }
 
-        var backdropTransitionDuration = Util.getTransitionDurationFromElement(this._backdrop);
-        $(this._backdrop).one(Util.TRANSITION_END, callback).emulateTransitionEnd(backdropTransitionDuration);
+        var backdropTransitionDuration = getTransitionDurationFromElement(this._backdrop);
+        EventHandler.one(this._backdrop, TRANSITION_END, callback);
+        emulateTransitionEnd(this._backdrop, backdropTransitionDuration);
       } else if (!this._isShown && this._backdrop) {
-        $(this._backdrop).removeClass(CLASS_NAME_SHOW$3);
+        this._backdrop.classList.remove(CLASS_NAME_SHOW$3);
 
         var callbackRemove = function callbackRemove() {
-          _this9._removeBackdrop();
+          _this8._removeBackdrop();
 
-          if (callback) {
-            callback();
-          }
+          callback();
         };
 
-        if ($(this._element).hasClass(CLASS_NAME_FADE)) {
-          var _backdropTransitionDuration = Util.getTransitionDurationFromElement(this._backdrop);
+        if (this._element.classList.contains(CLASS_NAME_FADE)) {
+          var _backdropTransitionDuration = getTransitionDurationFromElement(this._backdrop);
 
-          $(this._backdrop).one(Util.TRANSITION_END, callbackRemove).emulateTransitionEnd(_backdropTransitionDuration);
+          EventHandler.one(this._backdrop, TRANSITION_END, callbackRemove);
+          emulateTransitionEnd(this._backdrop, _backdropTransitionDuration);
         } else {
           callbackRemove();
         }
-      } else if (callback) {
+      } else {
         callback();
+      }
+    };
+
+    _proto._triggerBackdropTransition = function _triggerBackdropTransition() {
+      var _this9 = this;
+
+      if (this._config.backdrop === 'static') {
+        var hideEvent = EventHandler.trigger(this._element, EVENT_HIDE_PREVENTED);
+
+        if (hideEvent.defaultPrevented) {
+          return;
+        }
+
+        var isModalOverflowing = this._element.scrollHeight > document.documentElement.clientHeight;
+
+        if (!isModalOverflowing) {
+          this._element.style.overflowY = 'hidden';
+        }
+
+        this._element.classList.add(CLASS_NAME_STATIC);
+
+        var modalTransitionDuration = getTransitionDurationFromElement(this._dialog);
+        EventHandler.off(this._element, TRANSITION_END);
+        EventHandler.one(this._element, TRANSITION_END, function () {
+          _this9._element.classList.remove(CLASS_NAME_STATIC);
+
+          if (!isModalOverflowing) {
+            EventHandler.one(_this9._element, TRANSITION_END, function () {
+              _this9._element.style.overflowY = '';
+            });
+            emulateTransitionEnd(_this9._element, modalTransitionDuration);
+          }
+        });
+        emulateTransitionEnd(this._element, modalTransitionDuration);
+
+        this._element.focus();
+      } else {
+        this.hide();
       }
     } // ----------------------------------------------------------------------
     // the following methods are used to handle overflowing modals
-    // todo (fat): these should probably be refactored out of modal.js
     // ----------------------------------------------------------------------
     ;
 
@@ -3732,50 +3732,58 @@
       if (this._isBodyOverflowing) {
         // Note: DOMNode.style.paddingRight returns the actual value or '' if not set
         //   while $(DOMNode).css('padding-right') returns the calculated value or 0 if not set
-        var fixedContent = [].slice.call(document.querySelectorAll(SELECTOR_FIXED_CONTENT));
-        var stickyContent = [].slice.call(document.querySelectorAll(SELECTOR_STICKY_CONTENT)); // Adjust fixed content padding
-
-        $(fixedContent).each(function (index, element) {
+        // Adjust fixed content padding
+        SelectorEngine.find(SELECTOR_FIXED_CONTENT).forEach(function (element) {
           var actualPadding = element.style.paddingRight;
-          var calculatedPadding = $(element).css('padding-right');
-          $(element).data('padding-right', actualPadding).css('padding-right', parseFloat(calculatedPadding) + _this10._scrollbarWidth + "px");
+          var calculatedPadding = window.getComputedStyle(element)['padding-right'];
+          Manipulator.setDataAttribute(element, 'padding-right', actualPadding);
+          element.style.paddingRight = parseFloat(calculatedPadding) + _this10._scrollbarWidth + "px";
         }); // Adjust sticky content margin
 
-        $(stickyContent).each(function (index, element) {
+        SelectorEngine.find(SELECTOR_STICKY_CONTENT).forEach(function (element) {
           var actualMargin = element.style.marginRight;
-          var calculatedMargin = $(element).css('margin-right');
-          $(element).data('margin-right', actualMargin).css('margin-right', parseFloat(calculatedMargin) - _this10._scrollbarWidth + "px");
+          var calculatedMargin = window.getComputedStyle(element)['margin-right'];
+          Manipulator.setDataAttribute(element, 'margin-right', actualMargin);
+          element.style.marginRight = parseFloat(calculatedMargin) - _this10._scrollbarWidth + "px";
         }); // Adjust body padding
 
         var actualPadding = document.body.style.paddingRight;
-        var calculatedPadding = $(document.body).css('padding-right');
-        $(document.body).data('padding-right', actualPadding).css('padding-right', parseFloat(calculatedPadding) + this._scrollbarWidth + "px");
+        var calculatedPadding = window.getComputedStyle(document.body)['padding-right'];
+        Manipulator.setDataAttribute(document.body, 'padding-right', actualPadding);
+        document.body.style.paddingRight = parseFloat(calculatedPadding) + this._scrollbarWidth + "px";
       }
 
-      $(document.body).addClass(CLASS_NAME_OPEN);
+      document.body.classList.add(CLASS_NAME_OPEN);
     };
 
     _proto._resetScrollbar = function _resetScrollbar() {
       // Restore fixed content padding
-      var fixedContent = [].slice.call(document.querySelectorAll(SELECTOR_FIXED_CONTENT));
-      $(fixedContent).each(function (index, element) {
-        var padding = $(element).data('padding-right');
-        $(element).removeData('padding-right');
-        element.style.paddingRight = padding ? padding : '';
-      }); // Restore sticky content
+      SelectorEngine.find(SELECTOR_FIXED_CONTENT).forEach(function (element) {
+        var padding = Manipulator.getDataAttribute(element, 'padding-right');
 
-      var elements = [].slice.call(document.querySelectorAll("" + SELECTOR_STICKY_CONTENT));
-      $(elements).each(function (index, element) {
-        var margin = $(element).data('margin-right');
+        if (typeof padding !== 'undefined') {
+          Manipulator.removeDataAttribute(element, 'padding-right');
+          element.style.paddingRight = padding;
+        }
+      }); // Restore sticky content and navbar-toggler margin
+
+      SelectorEngine.find("" + SELECTOR_STICKY_CONTENT).forEach(function (element) {
+        var margin = Manipulator.getDataAttribute(element, 'margin-right');
 
         if (typeof margin !== 'undefined') {
-          $(element).css('margin-right', margin).removeData('margin-right');
+          Manipulator.removeDataAttribute(element, 'margin-right');
+          element.style.marginRight = margin;
         }
       }); // Restore body padding
 
-      var padding = $(document.body).data('padding-right');
-      $(document.body).removeData('padding-right');
-      document.body.style.paddingRight = padding ? padding : '';
+      var padding = Manipulator.getDataAttribute(document.body, 'padding-right');
+
+      if (typeof padding === 'undefined') {
+        document.body.style.paddingRight = '';
+      } else {
+        Manipulator.removeDataAttribute(document.body, 'padding-right');
+        document.body.style.paddingRight = padding;
+      }
     };
 
     _proto._getScrollbarWidth = function _getScrollbarWidth() {
@@ -3789,15 +3797,14 @@
     } // Static
     ;
 
-    Modal._jQueryInterface = function _jQueryInterface(config, relatedTarget) {
+    Modal.jQueryInterface = function jQueryInterface(config, relatedTarget) {
       return this.each(function () {
-        var data = $(this).data(DATA_KEY$7);
+        var data = Data.getData(this, DATA_KEY$7);
 
-        var _config = _objectSpread2(_objectSpread2(_objectSpread2({}, Default$5), $(this).data()), typeof config === 'object' && config ? config : {});
+        var _config = _objectSpread2(_objectSpread2(_objectSpread2({}, Default$5), Manipulator.getDataAttributes(this)), typeof config === 'object' && config ? config : {});
 
         if (!data) {
           data = new Modal(this, _config);
-          $(this).data(DATA_KEY$7, data);
         }
 
         if (typeof config === 'string') {
@@ -3810,6 +3817,10 @@
           data.show(relatedTarget);
         }
       });
+    };
+
+    Modal.getInstance = function getInstance(element) {
+      return Data.getData(element, DATA_KEY$7);
     };
 
     _createClass(Modal, null, [{
@@ -3827,52 +3838,63 @@
     return Modal;
   }();
   /**
-   * Data API implementation
+   * ------------------------------------------------------------------------
+   * Data Api implementation
+   * ------------------------------------------------------------------------
    */
 
 
-  $(document).on(EVENT_CLICK_DATA_API$7, SELECTOR_DATA_TOGGLE$3, function (event) {
+  EventHandler.on(document, EVENT_CLICK_DATA_API$7, SELECTOR_DATA_TOGGLE$3, function (event) {
     var _this11 = this;
 
-    var target;
-    var selector = Util.getSelectorFromElement(this);
-
-    if (selector) {
-      target = document.querySelector(selector);
-    }
-
-    var config = $(target).data(DATA_KEY$7) ? 'toggle' : _objectSpread2(_objectSpread2({}, $(target).data()), $(this).data());
+    var target = getElementFromSelector(this);
 
     if (this.tagName === 'A' || this.tagName === 'AREA') {
       event.preventDefault();
     }
 
-    var $target = $(target).one(EVENT_SHOW$2, function (showEvent) {
-      if (showEvent.isDefaultPrevented()) {
-        // Only register focus restorer if modal will actually get shown
+    EventHandler.one(target, EVENT_SHOW$2, function (showEvent) {
+      if (showEvent.defaultPrevented) {
+        // only register focus restorer if modal will actually get shown
         return;
       }
 
-      $target.one(EVENT_HIDDEN$2, function () {
-        if ($(_this11).is(':visible')) {
+      EventHandler.one(target, EVENT_HIDDEN$2, function () {
+        if (isVisible(_this11)) {
           _this11.focus();
         }
       });
     });
+    var data = Data.getData(target, DATA_KEY$7);
 
-    Modal._jQueryInterface.call($(target), config, this);
+    if (!data) {
+      var config = _objectSpread2(_objectSpread2({}, Manipulator.getDataAttributes(target)), Manipulator.getDataAttributes(this));
+
+      data = new Modal(target, config);
+    }
+
+    data.show(this);
   });
+  var $$8 = getjQuery();
   /**
+   * ------------------------------------------------------------------------
    * jQuery
+   * ------------------------------------------------------------------------
+   * add .modal to jQuery only if jQuery is present
    */
 
-  $.fn[NAME$7] = Modal._jQueryInterface;
-  $.fn[NAME$7].Constructor = Modal;
+  /* istanbul ignore if */
 
-  $.fn[NAME$7].noConflict = function () {
-    $.fn[NAME$7] = JQUERY_NO_CONFLICT$7;
-    return Modal._jQueryInterface;
-  };
+  if ($$8) {
+    var JQUERY_NO_CONFLICT$7 = $$8.fn[NAME$7];
+    $$8.fn[NAME$7] = Modal.jQueryInterface;
+    $$8.fn[NAME$7].Constructor = Modal;
+
+    $$8.fn[NAME$7].noConflict = function () {
+      $$8.fn[NAME$7] = JQUERY_NO_CONFLICT$7;
+      return Modal.jQueryInterface;
+    };
+  }
 
   /**
    * --------------------------------------------------------------------------
